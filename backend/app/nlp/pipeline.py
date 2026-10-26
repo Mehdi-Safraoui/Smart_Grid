@@ -138,6 +138,7 @@ class Analyse:
     intention: str = "liste"
     relation: dict | None = None
     superlatif: str | None = None
+    agregat: str | None = None
     attribut: str | None = None
     sparql: str = ""
     erreur: str | None = None
@@ -185,6 +186,15 @@ def analyser(question: str) -> Analyse:
     # Intention
     if any(normaliser(m) in texte.split() for m in V.MOTS_COMPTAGE):
         a.intention = "comptage"
+    else:
+        # « consommation totale », « puissance moyenne » : on ignore les mots déjà reconnus
+        # comme entité (« moyenne tension » désigne une classe, pas une moyenne)
+        couverts = {i for s in spans for i in range(s.start, s.end)}
+        hors_entites = {normaliser(t.text) for t in doc if t.i not in couverts}
+        if hors_entites & {normaliser(m) for m in V.MOTS_SOMME}:
+            a.agregat = "SUM"
+        elif hors_entites & {normaliser(m) for m in V.MOTS_MOYENNE}:
+            a.agregat = "AVG"
     if not a.filtres:
         if any(re.search(rf"\b{normaliser(m)}\b", texte) for m in V.MOTS_MIN):
             a.superlatif = "ASC"
@@ -202,10 +212,14 @@ def analyser(question: str) -> Analyse:
             suivant = [normaliser(x.text) for x in doc[t.i + 1:t.i + 3]]
             passif = "par" in suivant or "Part" in t.morph.get("VerbForm")
             # « Qu'alimente la batterie ? » : question sur l'objet, le sujet est après le verbe
-            inversion = normaliser(doc[0].text) in ("que", "qu'", "quoi")
+            # (mais pas « Qu'est-ce QUI alimente l'usine ? » : là, « qui » est le sujet)
+            inversion = (normaliser(doc[0].text) in ("que", "qu'", "quoi")
+                         and normaliser(doc[t.i - 1].text) != "qui")
             a.relation = {**rel, "position": t.i, "passif": passif or inversion, "verbe": t.text}
             a.intention = "relation" if a.intention != "comptage" else "comptage_relation"
             break
+    if a.agregat and a.intention == "liste":
+        a.intention = "agregat"
     if a.filtres and a.intention == "liste":
         a.intention = "filtre"
     if a.superlatif and a.intention == "liste":
@@ -291,15 +305,21 @@ def generer(a: Analyse) -> str:
             raise ValueError("Je n'ai reconnu aucun élément de l'ontologie dans la question.")
 
     lignes, _ = _contraintes("element", ents)
+    agregat = a.intention == "agregat" and attribut
     if attribut:
         motif = f"?element sg:{attribut} ?{attribut} ."
-        lignes.append(motif if (a.filtres or a.superlatif) else f"OPTIONAL {{ {motif} }}")
+        lignes.append(motif if (a.filtres or a.superlatif or agregat) else f"OPTIONAL {{ {motif} }}")
     for f in a.filtres:
         lignes.append(f"FILTER(?{attribut} {f['op']} {f['valeur']})")
     corps = "\n  ".join(lignes)
 
     if a.intention == "comptage":
         return f"SELECT (COUNT(DISTINCT ?element) AS ?nombre) WHERE {{\n  {corps}\n}}"
+    if agregat:
+        # sous-requête DISTINCT : un élément n'est compté qu'une fois même s'il a plusieurs types
+        nom = "total" if a.agregat == "SUM" else "moyenne"
+        return (f"SELECT ({a.agregat}(?{attribut}) AS ?{nom}) (COUNT(?element) AS ?nombre) WHERE {{\n"
+                f"  {{ SELECT DISTINCT ?element ?{attribut} WHERE {{\n  {corps}\n  }} }}\n}}")
 
     sel = "?element" + (f" ?{attribut}" if attribut else "") + " ?zone"
     requete = (f"SELECT DISTINCT {sel} WHERE {{\n  {corps}\n"

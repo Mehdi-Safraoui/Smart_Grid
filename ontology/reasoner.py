@@ -15,7 +15,7 @@ HERE = Path(__file__).resolve().parent
 SRC, OUT = HERE / "SmartGrid.owl", HERE / "SmartGrid_inferred.owl"
 
 world = World()
-onto = world.get_ontology(SRC.as_uri()).load()
+onto = world.get_ontology(f"file://{SRC.as_posix()}").load()   # as_uri() casse le chemin sous Windows
 try:
     with onto:  # les déductions sont ajoutées dans l'ontologie elle-même
         sync_reasoner_hermit(world, infer_property_values=True, debug=0)
