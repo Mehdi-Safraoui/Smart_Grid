@@ -68,6 +68,17 @@ def test_nlp_listes(question, attendu):
     assert {x["element"] for x in r["resultats"]} == attendu
 
 
+def test_production_tableau_de_bord():
+    d = c.get("/api/production/tableau-de-bord").json()
+    assert d["total_mw"] == d["renouvelable_mw"] + d["fossile_mw"] == 1129
+    assert d["part_renouvelable"] == 22.9
+    assert {z["zone"] for z in d["par_zone"]} >= {"Zone_Kairouan", "Zone_Bizerte", "Zone_Sousse"}
+    # le tableau de bord suit les modifications du CRUD
+    c.post("/api/production", json={"nom": "Centrale_Solaire_Gafsa", "type": "CentraleSolaire",
+                                    "puissance": 120, "zone": "Zone_Tozeur"})
+    assert c.get("/api/production/tableau-de-bord").json()["renouvelable_mw"] == 379
+
+
 # ----------------------------------------------------------------- NLP PRODUCTION (Mehdi)
 @pytest.mark.parametrize("question, attendu", [
     ("Quelles sont les centrales solaires ?", {"Centrale_Solaire_Tozeur", "Centrale_Solaire_Kairouan"}),

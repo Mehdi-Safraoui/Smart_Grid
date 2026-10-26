@@ -61,6 +61,61 @@ def obtenir(source_id: str) -> dict:
     return rows[0]
 
 
+# ------------------------------------------------------------------ TABLEAU DE BORD
+# Requêtes d'agrégation (SUM, COUNT, GROUP BY) : valeur ajoutée de la branche Production.
+def tableau_de_bord() -> dict:
+    # 1) Puissance totale par catégorie (renouvelable / fossile)
+    par_categorie = client.select("""
+    SELECT ?categorie (SUM(?p) AS ?puissance) (COUNT(DISTINCT ?s) AS ?nombre) WHERE {
+        VALUES ?categorie { sg:SourceRenouvelable sg:SourceFossile }
+        ?s a/rdfs:subClassOf* ?categorie ;
+           sg:puissanceMW ?p .
+    } GROUP BY ?categorie""")
+
+    # 2) Puissance par zone, séparée renouvelable / fossile
+    par_zone = client.select("""
+    SELECT ?zone ?categorie (SUM(?p) AS ?puissance) WHERE {
+        VALUES ?categorie { sg:SourceRenouvelable sg:SourceFossile }
+        ?s a/rdfs:subClassOf* ?categorie ;
+           sg:puissanceMW ?p ;
+           sg:estSitueDans ?zone .
+    } GROUP BY ?zone ?categorie""")
+
+    # 3) Puissance par type de source (classe la plus précise)
+    par_type = client.select("""
+    SELECT ?type (SUM(?p) AS ?puissance) (COUNT(DISTINCT ?s) AS ?nombre) WHERE {
+        VALUES ?type { sg:CentraleSolaire sg:ParcEolien sg:SourceFossile }
+        ?s a ?type ;
+           sg:puissanceMW ?p .
+    } GROUP BY ?type ORDER BY DESC(?puissance)""")
+
+    # 4) Puissance renouvelable reçue par chaque bâtiment (via la relation alimente)
+    par_batiment = client.select("""
+    SELECT ?batiment (SUM(?p) AS ?puissance) (COUNT(DISTINCT ?s) AS ?sources) WHERE {
+        ?s a/rdfs:subClassOf* sg:SourceRenouvelable ;
+           sg:puissanceMW ?p ;
+           sg:alimente ?batiment .
+    } GROUP BY ?batiment ORDER BY DESC(?puissance)""")
+
+    totaux = {r["categorie"]: r for r in par_categorie}
+    ren = totaux.get("SourceRenouvelable", {}).get("puissance", 0.0)
+    fos = totaux.get("SourceFossile", {}).get("puissance", 0.0)
+    zones: dict[str, dict] = {}
+    for r in par_zone:
+        z = zones.setdefault(r["zone"], {"zone": r["zone"], "renouvelable": 0.0, "fossile": 0.0})
+        z["renouvelable" if r["categorie"] == "SourceRenouvelable" else "fossile"] = r["puissance"]
+    return {
+        "total_mw": ren + fos,
+        "renouvelable_mw": ren,
+        "fossile_mw": fos,
+        "part_renouvelable": round(100 * ren / (ren + fos), 1) if ren + fos else 0.0,
+        "nombre_sources": sum(int(r["nombre"]) for r in par_categorie),
+        "par_zone": sorted(zones.values(), key=lambda z: -(z["renouvelable"] + z["fossile"])),
+        "par_type": par_type,
+        "par_batiment": par_batiment,
+    }
+
+
 # ------------------------------------------------------------------ CREATE
 def creer(nom: str, type_: str, puissance: float, zone: str,
           alimente: list[str] | None = None) -> None:

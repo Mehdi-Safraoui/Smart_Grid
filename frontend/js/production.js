@@ -19,6 +19,7 @@ async function charger() {
   const params = Object.fromEntries(new FormData(filtres));
   try {
     const sources = await api("/api/production", { params });
+    if (typeof chargerTableauDeBord === "function") chargerTableauDeBord();   // garde les graphiques à jour
     document.getElementById("liste").innerHTML = tableau(sources, COLONNES, (s) => `
       <button class="small secondary" onclick="editer('${s.source}')">Modifier</button>
       <button class="small danger" onclick="supprimer('${s.source}')">Supprimer</button>`);

@@ -92,7 +92,7 @@ Deux règles techniques :
   - Fuseki pour la soutenance (`docker compose up -d` puis `load_fuseki.py`).
   - Fusionner les Pull Requests et mettre à jour la présentation.
 - **Scénario :** « J'ajoute depuis la page Production la centrale solaire de Gafsa (120 MW) qui alimente l'usine de Sfax → elle apparaît dans la liste → je demande à l'assistant *Qui alimente l'usine de Sfax ?* → elle sort avec les centrales de Tozeur et de Kairouan et la batterie. »
-- **Valeur ajoutée :** un tableau de bord avec graphique (puissance renouvelable vs fossile, par zone), par exemple avec Chart.js.
+- **Valeur ajoutée :** ✅ tableau de bord en haut de la page Production : puissance installée, part renouvelable, graphiques par zone, par type et par bâtiment. Il repose sur des requêtes SPARQL d'agrégation (SUM, COUNT, GROUP BY) servies par `GET /api/production/tableau-de-bord`, et se met à jour après chaque ajout ou modification.
 
 ### Mohamed Elyess — Stockage
 - **Individus :** par exemple `Batterie_Sfax`, `Batterie_Kairouan`, `Stockage_H2_Gabes`, chacun avec `capaciteStockageMWh`, `stockeEnergieDe` et `alimente`.

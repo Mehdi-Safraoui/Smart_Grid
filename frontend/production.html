@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SmartGrid — Production</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
   <header>
@@ -22,6 +23,13 @@
   <main>
     <h1>Sources de production</h1>
     <p class="subtitle">Centrales solaires, parcs éoliens et sources fossiles — branche gérée par Mehdi</p>
+
+    <!-- Tableau de bord (valeur ajoutée) : agrégations SPARQL SUM / COUNT / GROUP BY -->
+    <section class="card">
+      <h2>Tableau de bord</h2>
+      <div class="dash-kpis" id="dash-kpis"></div>
+      <div class="dash-grille" id="dash-graphes"></div>
+    </section>
 
     <!-- Filtres et recherche (READ + FILTER) -->
     <section class="card">
@@ -73,5 +81,6 @@
 
   <script src="js/api.js"></script>
   <script src="js/production.js"></script>
+  <script src="js/dashboard.js"></script>
 </body>
 </html>

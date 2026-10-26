@@ -33,6 +33,12 @@ def types():
     return q.TYPES
 
 
+@router.get("/tableau-de-bord")
+def tableau_de_bord():
+    """Indicateurs agrégés : puissance renouvelable / fossile, par zone, par type, par bâtiment."""
+    return q.tableau_de_bord()
+
+
 @router.get("/{nom}")
 def obtenir(nom: str):
     return q.obtenir(nom)
