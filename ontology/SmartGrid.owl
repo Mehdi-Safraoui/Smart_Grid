@@ -278,6 +278,14 @@
   <rdf:type rdf:resource="#Zone"/>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#Zone_Kairouan">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Zone_Sousse">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#Centrale_Solaire_Tozeur">
   <rdf:type rdf:resource="#CentraleSolaire"/>
   <estSitueDans rdf:resource="#Zone_Tozeur"/>
@@ -375,12 +383,48 @@
   <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</tensionKV>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#Poste_Kairouan">
+  <rdf:type rdf:resource="#PosteTransformation"/>
+  <estSitueDans rdf:resource="#Zone_Kairouan"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Poste_Sousse">
+  <rdf:type rdf:resource="#PosteTransformation"/>
+  <estSitueDans rdf:resource="#Zone_Sousse"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Ligne_Kairouan_Sousse">
+  <rdf:type rdf:resource="#LigneTransport"/>
+  <relie rdf:resource="#Poste_Kairouan"/>
+  <relie rdf:resource="#Poste_Sousse"/>
+  <estSitueDans rdf:resource="#Zone_Kairouan"/>
+  <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">225.0</tensionKV>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Ligne_Sfax_Sousse">
+  <rdf:type rdf:resource="#LigneTransport"/>
+  <relie rdf:resource="#Poste_Sfax"/>
+  <relie rdf:resource="#Poste_Sousse"/>
+  <estSitueDans rdf:resource="#Zone_Sousse"/>
+  <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">150.0</tensionKV>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Ligne_Quartier_Sfax">
+  <rdf:type rdf:resource="#LigneDistribution"/>
+  <relie rdf:resource="#Poste_Sfax"/>
+  <relie rdf:resource="#Usine_Sfax"/>
+  <estSitueDans rdf:resource="#Zone_Sfax"/>
+  <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</tensionKV>
+</owl:NamedIndividual>
+
 <owl:AllDifferent>
   <owl:distinctMembers rdf:parseType="Collection">
     <rdf:Description rdf:about="#Zone_Tunis"/>
     <rdf:Description rdf:about="#Zone_Nabeul"/>
     <rdf:Description rdf:about="#Zone_Tozeur"/>
     <rdf:Description rdf:about="#Zone_Sfax"/>
+    <rdf:Description rdf:about="#Zone_Kairouan"/>
+    <rdf:Description rdf:about="#Zone_Sousse"/>
   </owl:distinctMembers>
 </owl:AllDifferent>
 

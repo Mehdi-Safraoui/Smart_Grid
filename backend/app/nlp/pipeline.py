@@ -200,7 +200,8 @@ def analyser(question: str) -> Analyse:
         if verbe:
             rel = V.RELATIONS[verbe]
             suivant = [normaliser(x.text) for x in doc[t.i + 1:t.i + 3]]
-            passif = "par" in suivant or "Part" in t.morph.get("VerbForm")
+            passif = "par" in suivant or ("Part" in t.morph.get("VerbForm")
+                                          and not rel.get("participe_sans_inversion"))
             # « Qu'alimente la batterie ? » : question sur l'objet, le sujet est après le verbe
             inversion = normaliser(doc[0].text) in ("que", "qu'", "quoi")
             a.relation = {**rel, "position": t.i, "passif": passif or inversion, "verbe": t.text}

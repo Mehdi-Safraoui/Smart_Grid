@@ -62,6 +62,9 @@ l'analyse détaillée (tokens, entités, intention, requête) dans « Voir l'ana
 - Quels sont les gros consommateurs ?
 - Quel stockage a la plus grande capacité ?
 - Quelles lignes ont une tension supérieure à 100 kV ?
+- Quelles lignes sont reliées au poste de Sousse ?
+- Qu'est-ce que relie la ligne Tozeur Sfax ?
+- Combien de postes y a-t-il ?
 - Qui alimente l'usine de Sfax ?
 - Quels bâtiments sont alimentés par le parc éolien ?
 - Qu'alimente la batterie de Tozeur ?
