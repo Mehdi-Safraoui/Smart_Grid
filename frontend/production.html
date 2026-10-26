@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartGrid — Production</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">⚡ Smart<span>Grid</span></div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="production.html">Production</a>
+      <a href="stockage.html">Stockage</a>
+      <a href="consommation.html">Consommation</a>
+      <a href="reseau.html">Réseau</a>
+      <a href="console.html">Console SPARQL</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Sources de production</h1>
+    <p class="subtitle">Centrales solaires, parcs éoliens et sources fossiles — branche gérée par Mehdi</p>
+
+    <!-- Filtres et recherche (READ + FILTER) -->
+    <section class="card">
+      <form class="toolbar" id="filtres">
+        <label class="field">Recherche<input name="recherche" placeholder="nom…"></label>
+        <label class="field">Type<select name="type">
+          <option value="">Tous</option>
+          <option value="SourceRenouvelable">Renouvelables</option>
+          <option value="CentraleSolaire">Centrales solaires</option>
+          <option value="ParcEolien">Parcs éoliens</option>
+          <option value="SourceFossile">Fossiles</option>
+        </select></label>
+        <label class="field">Zone<select name="zone" id="filtre-zone"></select></label>
+        <label class="field">Puissance min (MW)<input name="min_mw" type="number" min="0" step="any"></label>
+        <label class="field">Puissance max (MW)<input name="max_mw" type="number" min="0" step="any"></label>
+        <button type="submit">Filtrer</button>
+        <button type="reset" class="secondary">Effacer</button>
+      </form>
+    </section>
+
+    <!-- Liste -->
+    <section class="card">
+      <h2>Liste</h2>
+      <div id="liste"></div>
+    </section>
+
+    <!-- Ajout / modification (CREATE + UPDATE) -->
+    <section class="card">
+      <h2 id="form-titre">Ajouter une source</h2>
+      <form id="form-source">
+        <div class="form-grid">
+          <label class="field">Nom (identifiant)<input name="nom" required pattern="[A-Za-z][A-Za-z0-9_]*" placeholder="Centrale_Solaire_Kairouan"></label>
+          <label class="field">Type<select name="type" required>
+            <option value="CentraleSolaire">Centrale solaire</option>
+            <option value="ParcEolien">Parc éolien</option>
+            <option value="SourceFossile">Source fossile</option>
+          </select></label>
+          <label class="field">Puissance (MW)<input name="puissance" type="number" min="0.001" step="any" required></label>
+          <label class="field">Zone<select name="zone" id="form-zone" required></select></label>
+          <label class="field">Alimente (bâtiment)<select name="alimente" id="form-batiment"></select></label>
+        </div>
+        <p class="toolbar" style="margin-top:14px">
+          <button type="submit" id="btn-enregistrer">Ajouter</button>
+          <button type="button" class="secondary" id="btn-annuler" hidden>Annuler</button>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/production.js"></script>
+</body>
+</html>

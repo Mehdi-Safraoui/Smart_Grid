@@ -1,0 +1,9 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+rdflib>=7.0
+SPARQLWrapper>=2.0
+spacy>=3.7,<4
+owlready2>=0.46
+requests>=2.31
+httpx>=0.27
+pytest>=8.0

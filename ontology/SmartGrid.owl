@@ -1,0 +1,405 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://www.semanticweb.org/smartgrid/ontologie"
+         xmlns="http://www.semanticweb.org/smartgrid/ontologie#">
+
+<owl:Ontology rdf:about="http://www.semanticweb.org/smartgrid/ontologie"/>
+
+<owl:ObjectProperty rdf:about="#alimente">
+  <rdfs:domain>
+    <owl:Class>
+      <owl:unionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#SourceProduction"/>
+        <rdf:Description rdf:about="#SystemeStockage"/>
+      </owl:unionOf>
+    </owl:Class>
+  </rdfs:domain>
+  <rdfs:range rdf:resource="#BatimentConsommateur"/>
+  <owl:inverseOf rdf:resource="#estAlimentePar"/>
+  <rdfs:label xml:lang="fr">alimente</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#estAlimentePar">
+  <rdfs:domain rdf:resource="#BatimentConsommateur"/>
+  <rdfs:range>
+    <owl:Class>
+      <owl:unionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#SourceProduction"/>
+        <rdf:Description rdf:about="#SystemeStockage"/>
+      </owl:unionOf>
+    </owl:Class>
+  </rdfs:range>
+  <owl:inverseOf rdf:resource="#alimente"/>
+  <rdfs:label xml:lang="fr">estAlimentePar</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#stockeEnergieDe">
+  <rdfs:domain rdf:resource="#SystemeStockage"/>
+  <rdfs:range rdf:resource="#SourceProduction"/>
+  <rdfs:label xml:lang="fr">stockeEnergieDe</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#relie">
+  <rdfs:domain rdf:resource="#LigneElectrique"/>
+  <rdfs:range rdf:resource="#ComposantSmartGrid"/>
+  <rdfs:label xml:lang="fr">relie</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#estSitueDans">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#ComposantSmartGrid"/>
+  <rdfs:range rdf:resource="#Zone"/>
+  <rdfs:label xml:lang="fr">estSitueDans</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#puissanceMW">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#SourceProduction"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label xml:lang="fr">puissanceMW</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#capaciteStockageMWh">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#SystemeStockage"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label xml:lang="fr">capaciteStockageMWh</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#consommationKWh">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#BatimentConsommateur"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label xml:lang="fr">consommationKWh</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#tensionKV">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#LigneElectrique"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label xml:lang="fr">tensionKV</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#ComposantSmartGrid">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#estSitueDans"/>
+      <owl:someValuesFrom rdf:resource="#Zone"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <owl:disjointWith rdf:resource="#Zone"/>
+  <rdfs:label xml:lang="fr">ComposantSmartGrid</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#SourceProduction">
+  <rdfs:subClassOf rdf:resource="#ComposantSmartGrid"/>
+  <rdfs:label xml:lang="fr">SourceProduction</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#SourceRenouvelable">
+  <rdfs:subClassOf rdf:resource="#SourceProduction"/>
+  <owl:disjointWith rdf:resource="#SourceFossile"/>
+  <rdfs:label xml:lang="fr">SourceRenouvelable</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#CentraleSolaire">
+  <rdfs:subClassOf rdf:resource="#SourceRenouvelable"/>
+  <owl:disjointWith rdf:resource="#ParcEolien"/>
+  <rdfs:label xml:lang="fr">CentraleSolaire</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#ParcEolien">
+  <rdfs:subClassOf rdf:resource="#SourceRenouvelable"/>
+  <rdfs:label xml:lang="fr">ParcEolien</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#SourceFossile">
+  <rdfs:subClassOf rdf:resource="#SourceProduction"/>
+  <rdfs:label xml:lang="fr">SourceFossile</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#SystemeStockage">
+  <rdfs:subClassOf rdf:resource="#ComposantSmartGrid"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#stockeEnergieDe"/>
+      <owl:someValuesFrom rdf:resource="#SourceProduction"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="fr">SystemeStockage</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Batterie">
+  <rdfs:subClassOf rdf:resource="#SystemeStockage"/>
+  <owl:disjointWith rdf:resource="#StockageHydrogene"/>
+  <rdfs:label xml:lang="fr">Batterie</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#StockageHydrogene">
+  <rdfs:subClassOf rdf:resource="#SystemeStockage"/>
+  <rdfs:label xml:lang="fr">StockageHydrogene</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#BatimentConsommateur">
+  <rdfs:subClassOf rdf:resource="#ComposantSmartGrid"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#estAlimentePar"/>
+      <owl:someValuesFrom>
+        <owl:Class>
+          <owl:unionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#SourceProduction"/>
+            <rdf:Description rdf:about="#SystemeStockage"/>
+          </owl:unionOf>
+        </owl:Class>
+      </owl:someValuesFrom>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="fr">BatimentConsommateur</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#BatimentResidentiel">
+  <rdfs:subClassOf rdf:resource="#BatimentConsommateur"/>
+  <rdfs:label xml:lang="fr">BatimentResidentiel</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#BatimentCommercial">
+  <rdfs:subClassOf rdf:resource="#BatimentConsommateur"/>
+  <rdfs:label xml:lang="fr">BatimentCommercial</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#BatimentIndustriel">
+  <rdfs:subClassOf rdf:resource="#BatimentConsommateur"/>
+  <rdfs:label xml:lang="fr">BatimentIndustriel</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#InfrastructureReseau">
+  <rdfs:subClassOf rdf:resource="#ComposantSmartGrid"/>
+  <rdfs:label xml:lang="fr">InfrastructureReseau</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#LigneElectrique">
+  <rdfs:subClassOf rdf:resource="#InfrastructureReseau"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#relie"/>
+      <owl:onClass rdf:resource="#ComposantSmartGrid"/>
+      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <owl:disjointWith rdf:resource="#PosteTransformation"/>
+  <rdfs:label xml:lang="fr">LigneElectrique</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#LigneTransport">
+  <rdfs:subClassOf rdf:resource="#LigneElectrique"/>
+  <owl:disjointWith rdf:resource="#LigneDistribution"/>
+  <rdfs:label xml:lang="fr">LigneTransport</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#LigneDistribution">
+  <rdfs:subClassOf rdf:resource="#LigneElectrique"/>
+  <rdfs:label xml:lang="fr">LigneDistribution</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#PosteTransformation">
+  <rdfs:subClassOf rdf:resource="#InfrastructureReseau"/>
+  <rdfs:label xml:lang="fr">PosteTransformation</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Zone">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label xml:lang="fr">Zone</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#GrosConsommateur">
+  <rdfs:subClassOf rdf:resource="#BatimentConsommateur"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#BatimentConsommateur"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#consommationKWh"/>
+          <owl:someValuesFrom>
+            <rdfs:Datatype>
+              <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+              <owl:withRestrictions>
+                <rdf:Description>
+                  <rdf:first>
+                    <rdf:Description>
+                      <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">100000.0</xsd:minInclusive>
+                    </rdf:Description>
+                  </rdf:first>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                </rdf:Description>
+              </owl:withRestrictions>
+            </rdfs:Datatype>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label xml:lang="fr">GrosConsommateur</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#BatimentAlimenteRenouvelable">
+  <rdfs:subClassOf rdf:resource="#BatimentConsommateur"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#BatimentConsommateur"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#estAlimentePar"/>
+          <owl:someValuesFrom rdf:resource="#SourceRenouvelable"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label xml:lang="fr">BatimentAlimenteRenouvelable</rdfs:label>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#Zone_Tunis">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Zone_Nabeul">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Zone_Tozeur">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Zone_Sfax">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Centrale_Solaire_Tozeur">
+  <rdf:type rdf:resource="#CentraleSolaire"/>
+  <estSitueDans rdf:resource="#Zone_Tozeur"/>
+  <alimente rdf:resource="#Usine_Sfax"/>
+  <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.0</puissanceMW>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Parc_Eolien_SidiDaoud">
+  <rdf:type rdf:resource="#ParcEolien"/>
+  <estSitueDans rdf:resource="#Zone_Nabeul"/>
+  <alimente rdf:resource="#Centre_Commercial_Tunis"/>
+  <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">54.0</puissanceMW>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Centrale_Gaz_Rades">
+  <rdf:type rdf:resource="#SourceFossile"/>
+  <estSitueDans rdf:resource="#Zone_Tunis"/>
+  <alimente rdf:resource="#Residence_ElMenzah"/>
+  <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">450.0</puissanceMW>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Batterie_Tozeur">
+  <rdf:type rdf:resource="#Batterie"/>
+  <stockeEnergieDe rdf:resource="#Centrale_Solaire_Tozeur"/>
+  <estSitueDans rdf:resource="#Zone_Tozeur"/>
+  <alimente rdf:resource="#Usine_Sfax"/>
+  <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20.0</capaciteStockageMWh>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Stockage_H2_SidiDaoud">
+  <rdf:type rdf:resource="#StockageHydrogene"/>
+  <stockeEnergieDe rdf:resource="#Parc_Eolien_SidiDaoud"/>
+  <estSitueDans rdf:resource="#Zone_Nabeul"/>
+  <alimente rdf:resource="#Centre_Commercial_Tunis"/>
+  <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">50.0</capaciteStockageMWh>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Residence_ElMenzah">
+  <rdf:type rdf:resource="#BatimentResidentiel"/>
+  <estSitueDans rdf:resource="#Zone_Tunis"/>
+  <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12000.0</consommationKWh>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Centre_Commercial_Tunis">
+  <rdf:type rdf:resource="#BatimentCommercial"/>
+  <estSitueDans rdf:resource="#Zone_Tunis"/>
+  <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">250000.0</consommationKWh>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Usine_Sfax">
+  <rdf:type rdf:resource="#BatimentIndustriel"/>
+  <estSitueDans rdf:resource="#Zone_Sfax"/>
+  <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">900000.0</consommationKWh>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Poste_Sfax">
+  <rdf:type rdf:resource="#PosteTransformation"/>
+  <estSitueDans rdf:resource="#Zone_Sfax"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Poste_Tunis">
+  <rdf:type rdf:resource="#PosteTransformation"/>
+  <estSitueDans rdf:resource="#Zone_Tunis"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Ligne_Tozeur_Sfax">
+  <rdf:type rdf:resource="#LigneTransport"/>
+  <relie rdf:resource="#Centrale_Solaire_Tozeur"/>
+  <relie rdf:resource="#Poste_Sfax"/>
+  <estSitueDans rdf:resource="#Zone_Sfax"/>
+  <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">225.0</tensionKV>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Ligne_Poste_Usine_Sfax">
+  <rdf:type rdf:resource="#LigneDistribution"/>
+  <relie rdf:resource="#Poste_Sfax"/>
+  <relie rdf:resource="#Usine_Sfax"/>
+  <estSitueDans rdf:resource="#Zone_Sfax"/>
+  <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30.0</tensionKV>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Ligne_Rades_Tunis">
+  <rdf:type rdf:resource="#LigneTransport"/>
+  <relie rdf:resource="#Centrale_Gaz_Rades"/>
+  <relie rdf:resource="#Poste_Tunis"/>
+  <estSitueDans rdf:resource="#Zone_Tunis"/>
+  <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">225.0</tensionKV>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Ligne_Quartier_ElMenzah">
+  <rdf:type rdf:resource="#LigneDistribution"/>
+  <relie rdf:resource="#Poste_Tunis"/>
+  <relie rdf:resource="#Residence_ElMenzah"/>
+  <estSitueDans rdf:resource="#Zone_Tunis"/>
+  <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</tensionKV>
+</owl:NamedIndividual>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Zone_Tunis"/>
+    <rdf:Description rdf:about="#Zone_Nabeul"/>
+    <rdf:Description rdf:about="#Zone_Tozeur"/>
+    <rdf:Description rdf:about="#Zone_Sfax"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#BatimentResidentiel"/>
+    <rdf:Description rdf:about="#BatimentCommercial"/>
+    <rdf:Description rdf:about="#BatimentIndustriel"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#SourceProduction"/>
+    <rdf:Description rdf:about="#SystemeStockage"/>
+    <rdf:Description rdf:about="#BatimentConsommateur"/>
+    <rdf:Description rdf:about="#InfrastructureReseau"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>

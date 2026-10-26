@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartGrid — Bâtiments consommateurs</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">⚡ Smart<span>Grid</span></div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="production.html">Production</a>
+      <a href="stockage.html">Stockage</a>
+      <a href="consommation.html">Consommation</a>
+      <a href="reseau.html">Réseau</a>
+      <a href="console.html">Console SPARQL</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Bâtiments consommateurs</h1>
+    <p class="subtitle">Résidentiels, commerciaux et industriels — branche gérée par Ahmed Amine</p>
+
+    <div class="todo">
+      <b>À compléter par Ahmed Amine.</b> La liste fonctionne déjà. Il reste à ajouter, en suivant
+      <code>production.html</code> et <code>js/production.js</code> : les filtres (type, zone, valeur min/max,
+      recherche), le formulaire d'ajout / modification et le bouton de suppression.
+      Retirez cet encadré une fois terminé.
+    </div>
+
+    <!-- TODO : formulaire de filtres (voir production.html) -->
+
+    <section class="card">
+      <h2>Liste</h2>
+      <div id="liste"></div>
+    </section>
+
+    <!-- TODO : formulaire d'ajout / modification (voir production.html) -->
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/consommation.js"></script>
+</body>
+</html>

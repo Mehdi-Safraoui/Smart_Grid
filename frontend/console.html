@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartGrid — Console SPARQL</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">⚡ Smart<span>Grid</span></div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="production.html">Production</a>
+      <a href="stockage.html">Stockage</a>
+      <a href="consommation.html">Consommation</a>
+      <a href="reseau.html">Réseau</a>
+      <a href="console.html">Console SPARQL</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Console SPARQL</h1>
+    <p class="subtitle">Exécuter une requête de lecture directement sur le serveur. Les préfixes <code>sg:</code>, <code>rdf:</code>, <code>rdfs:</code>, <code>owl:</code> et <code>xsd:</code> sont ajoutés automatiquement.</p>
+
+    <section class="card">
+      <div class="toolbar" style="margin-bottom:10px">
+        <label class="field">Exemples<select id="exemples"></select></label>
+      </div>
+      <textarea id="requete" rows="9" style="width:100%;font-family:monospace"></textarea>
+      <p><button id="executer">Exécuter</button></p>
+      <div id="resultat"></div>
+    </section>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/console.js"></script>
+</body>
+</html>

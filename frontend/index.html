@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartGrid — Accueil</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">⚡ Smart<span>Grid</span></div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="production.html">Production</a>
+      <a href="stockage.html">Stockage</a>
+      <a href="consommation.html">Consommation</a>
+      <a href="reseau.html">Réseau</a>
+      <a href="console.html">Console SPARQL</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Smart Grid tunisien</h1>
+    <p class="subtitle">Ontologie OWL · serveur SPARQL · assistant en langage naturel (spaCy)</p>
+
+    <div class="stats" id="stats"></div>
+
+    <section class="card">
+      <h2>Posez votre question en français</h2>
+      <div class="chat">
+        <form class="chat-form" id="chat-form">
+          <input id="question" placeholder="Ex. : Quelles sources produisent plus de 50 MW ?" autocomplete="off" required>
+          <button type="submit">Demander</button>
+        </form>
+        <div class="examples" id="examples"></div>
+        <div id="reponses"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>
