@@ -30,19 +30,19 @@ def test_health_et_zones():
 
 # ----------------------------------------------------------------- PRODUCTION (Mehdi)
 def test_production_crud():
-    nouvelle = {"nom": "Centrale_Solaire_Kairouan", "type": "CentraleSolaire",
-                "puissance": 100, "zone": "Zone_Tozeur", "alimente": ["Usine_Sfax"]}
+    nouvelle = {"nom": "Centrale_Solaire_Gafsa", "type": "CentraleSolaire",
+                "puissance": 120, "zone": "Zone_Tozeur", "alimente": ["Usine_Sfax"]}
     assert c.post("/api/production", json=nouvelle).status_code == 201
     assert c.post("/api/production", json=nouvelle).status_code == 409        # doublon
     noms = [s["source"] for s in c.get("/api/production", params={"min_mw": 50}).json()]
-    assert "Centrale_Solaire_Kairouan" in noms
-    assert c.put("/api/production/Centrale_Solaire_Kairouan", json={"puissance": 120}).status_code == 200
-    assert c.get("/api/production/Centrale_Solaire_Kairouan").json()["puissance"] == 120
+    assert "Centrale_Solaire_Gafsa" in noms
+    assert c.put("/api/production/Centrale_Solaire_Gafsa", json={"puissance": 150}).status_code == 200
+    assert c.get("/api/production/Centrale_Solaire_Gafsa").json()["puissance"] == 150
     # le NLP reconnaît immédiatement le nouvel individu et la relation inverse
     r = ask("Qui alimente l'usine de Sfax ?")
-    assert "Centrale_Solaire_Kairouan" in {x["sujet"] for x in r["resultats"]}
-    assert c.delete("/api/production/Centrale_Solaire_Kairouan").status_code == 200
-    assert c.get("/api/production/Centrale_Solaire_Kairouan").status_code == 404
+    assert "Centrale_Solaire_Gafsa" in {x["sujet"] for x in r["resultats"]}
+    assert c.delete("/api/production/Centrale_Solaire_Gafsa").status_code == 200
+    assert c.get("/api/production/Centrale_Solaire_Gafsa").status_code == 404
 
 
 def test_production_recherche_et_injection():
@@ -54,8 +54,8 @@ def test_production_recherche_et_injection():
 
 # ----------------------------------------------------------------- NLP
 @pytest.mark.parametrize("question, attendu", [
-    ("Quelles sont les centrales solaires ?", {"Centrale_Solaire_Tozeur"}),
-    ("Quelles sources produisent plus de 50 MW ?", {"Centrale_Gaz_Rades", "Parc_Eolien_SidiDaoud"}),
+    ("Quelles sources produisent plus de 50 MW ?", {"Centrale_Gaz_Rades", "Centrale_Gaz_Sousse",
+     "Centrale_Solaire_Kairouan", "Parc_Eolien_Bizerte", "Parc_Eolien_SidiDaoud"}),
     ("Quelle est la source la plus puissante ?", {"Centrale_Gaz_Rades"}),
     ("Quels bâtiments consomment plus de 100 000 kWh ?", {"Usine_Sfax", "Centre_Commercial_Tunis"}),
     ("Liste les sources renouvelables à Tozeur", {"Centrale_Solaire_Tozeur"}),
@@ -68,11 +68,36 @@ def test_nlp_listes(question, attendu):
     assert {x["element"] for x in r["resultats"]} == attendu
 
 
+# ----------------------------------------------------------------- NLP PRODUCTION (Mehdi)
+@pytest.mark.parametrize("question, attendu", [
+    ("Quelles sont les centrales solaires ?", {"Centrale_Solaire_Tozeur", "Centrale_Solaire_Kairouan"}),
+    ("Quels parcs éoliens produisent plus de 60 MW ?", {"Parc_Eolien_Bizerte"}),
+    ("Quelle est la source renouvelable la plus puissante ?", {"Centrale_Solaire_Kairouan"}),
+    ("Quelle est la source la moins puissante ?", {"Centrale_Solaire_Tozeur"}),
+    ("Quelles sources ont une puissance entre 50 et 200 MW ?",
+     {"Centrale_Solaire_Kairouan", "Parc_Eolien_Bizerte", "Parc_Eolien_SidiDaoud"}),
+    ("Quelles sources fossiles y a-t-il ?", {"Centrale_Gaz_Rades", "Centrale_Gaz_Sousse"}),
+    ("Quelles centrales se trouvent à Bizerte ?", {"Parc_Eolien_Bizerte"}),
+])
+def test_nlp_production(question, attendu):
+    r = ask(question)
+    assert r["erreur"] is None
+    assert {x["element"] for x in r["resultats"]} == attendu
+
+
+def test_nlp_production_comptage_et_relations():
+    assert ask("Combien de sources renouvelables y a-t-il ?")["resultats"] == [{"nombre": 4}]
+    assert {x["objet"] for x in ask("Qu'alimente la centrale solaire de Kairouan ?")["resultats"]} \
+        == {"Usine_Sfax"}
+    assert {x["sujet"] for x in ask("Qui alimente la résidence El Menzah ?")["resultats"]} \
+        == {"Centrale_Gaz_Rades", "Parc_Eolien_Bizerte"}
+
+
 def test_nlp_comptage_relation_detail():
     assert ask("Combien de bâtiments y a-t-il à Tunis ?")["resultats"] == [{"nombre": 2}]
     assert {x["sujet"] for x in ask("Qui alimente l'usine de Sfax ?")["resultats"]} \
-        == {"Centrale_Solaire_Tozeur", "Batterie_Tozeur"}
+        == {"Centrale_Solaire_Tozeur", "Centrale_Solaire_Kairouan", "Batterie_Tozeur"}
     assert {x["objet"] for x in ask("Quels bâtiments sont alimentés par le parc éolien ?")["resultats"]} \
-        == {"Centre_Commercial_Tunis"}
+        == {"Centre_Commercial_Tunis", "Residence_ElMenzah"}
     assert ask("Donne-moi des infos sur Radès")["analyse"]["intention"] == "detail"
     assert ask("Bonjour ça va ?")["erreur"]

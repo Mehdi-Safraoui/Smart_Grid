@@ -278,6 +278,18 @@
   <rdf:type rdf:resource="#Zone"/>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#Zone_Kairouan">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Zone_Bizerte">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Zone_Sousse">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#Centrale_Solaire_Tozeur">
   <rdf:type rdf:resource="#CentraleSolaire"/>
   <estSitueDans rdf:resource="#Zone_Tozeur"/>
@@ -297,6 +309,27 @@
   <estSitueDans rdf:resource="#Zone_Tunis"/>
   <alimente rdf:resource="#Residence_ElMenzah"/>
   <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">450.0</puissanceMW>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Centrale_Solaire_Kairouan">
+  <rdf:type rdf:resource="#CentraleSolaire"/>
+  <estSitueDans rdf:resource="#Zone_Kairouan"/>
+  <alimente rdf:resource="#Usine_Sfax"/>
+  <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">100.0</puissanceMW>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Parc_Eolien_Bizerte">
+  <rdf:type rdf:resource="#ParcEolien"/>
+  <estSitueDans rdf:resource="#Zone_Bizerte"/>
+  <alimente rdf:resource="#Residence_ElMenzah"/>
+  <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">95.0</puissanceMW>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Centrale_Gaz_Sousse">
+  <rdf:type rdf:resource="#SourceFossile"/>
+  <estSitueDans rdf:resource="#Zone_Sousse"/>
+  <alimente rdf:resource="#Centre_Commercial_Tunis"/>
+  <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">420.0</puissanceMW>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#Batterie_Tozeur">
@@ -381,6 +414,9 @@
     <rdf:Description rdf:about="#Zone_Nabeul"/>
     <rdf:Description rdf:about="#Zone_Tozeur"/>
     <rdf:Description rdf:about="#Zone_Sfax"/>
+    <rdf:Description rdf:about="#Zone_Kairouan"/>
+    <rdf:Description rdf:about="#Zone_Bizerte"/>
+    <rdf:Description rdf:about="#Zone_Sousse"/>
   </owl:distinctMembers>
 </owl:AllDifferent>
 

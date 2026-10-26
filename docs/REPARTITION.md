@@ -71,6 +71,7 @@ Deux règles techniques :
 - [ ] Ajouter des synonymes pour vos classes (section de votre branche).
 - [ ] Ajouter **votre relation** dans `RELATIONS` (voir le tableau plus bas).
 - [ ] Faire marcher **au moins 5 questions** de votre branche et les ajouter comme tests dans `backend/tests/test_api.py`.
+- [ ] Mettre vos meilleures questions dans **votre ligne d'exemples** de l'assistant (`frontend/js/chat.js`, objet `EXEMPLES`) : ce sont celles que vous poserez en démo.
 - [ ] Savoir expliquer les 4 étapes du pipeline (voir `docs/NLP.md`) et les outils utilisés.
 
 ### 6. Scénario (2 pts)
@@ -86,11 +87,11 @@ Deux règles techniques :
 ### Mehdi — Production (modèle) + intégration
 - **Déjà fait :** individus de base, CRUD complet, page `production.html`, relation `alimente` dans le NLP.
 - **À faire :**
-  - 3 individus de plus, par exemple `Centrale_Solaire_Kairouan`, `Parc_Eolien_Bizerte`, `Centrale_Gaz_Sousse` (avec de nouvelles zones).
-  - 5 tests NLP sur la production.
+  - ✅ 3 individus de plus : `Centrale_Solaire_Kairouan` (100 MW), `Parc_Eolien_Bizerte` (95 MW), `Centrale_Gaz_Sousse` (420 MW), avec les zones Kairouan, Bizerte et Sousse.
+  - ✅ 10 questions NLP Production testées (`test_nlp_production*`).
   - Fuseki pour la soutenance (`docker compose up -d` puis `load_fuseki.py`).
   - Fusionner les Pull Requests et mettre à jour la présentation.
-- **Scénario :** « J'ajoute la centrale solaire de Kairouan (100 MW) qui alimente l'usine de Sfax → elle apparaît dans la liste → je demande à l'assistant *Qui alimente l'usine de Sfax ?* → elle sort avec la batterie et la centrale de Tozeur. »
+- **Scénario :** « J'ajoute depuis la page Production la centrale solaire de Gafsa (120 MW) qui alimente l'usine de Sfax → elle apparaît dans la liste → je demande à l'assistant *Qui alimente l'usine de Sfax ?* → elle sort avec les centrales de Tozeur et de Kairouan et la batterie. »
 - **Valeur ajoutée :** un tableau de bord avec graphique (puissance renouvelable vs fossile, par zone), par exemple avec Chart.js.
 
 ### Mohamed Elyess — Stockage

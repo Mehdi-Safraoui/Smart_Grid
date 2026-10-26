@@ -1,14 +1,28 @@
 // =====================================================================
 // Page d'accueil : statistiques + assistant NLP (question -> SPARQL)
 // =====================================================================
-const EXEMPLES = [
-  "Quelles sources produisent plus de 50 MW ?",
-  "Qui alimente l'usine de Sfax ?",
-  "Quelle est la source la plus puissante ?",
-  "Combien de bâtiments y a-t-il à Tunis ?",
-  "Quels sont les gros consommateurs ?",
-  "Liste les sources renouvelables à Tozeur",
-];
+// Questions d'exemple, rangées par branche : chaque membre complète SA ligne
+// avec des questions dont il a vérifié qu'elles fonctionnent (voir les tests).
+const EXEMPLES = {
+  "⚡ Production": [
+    "Quelle est la source la plus puissante ?",
+    "Quels parcs éoliens produisent plus de 60 MW ?",
+    "Combien de sources renouvelables y a-t-il ?",
+    "Qui alimente l'usine de Sfax ?",
+  ],
+  "🔋 Stockage": [            // Mohamed Elyess
+    "Quel stockage a la plus grande capacité ?",
+    "Quelles sont les batteries ?",
+  ],
+  "🏢 Consommation": [        // Ahmed Amine
+    "Quels bâtiments consomment plus de 100 000 kWh ?",
+    "Quels sont les gros consommateurs ?",
+  ],
+  "🔌 Réseau": [              // Yassine
+    "Quelles lignes ont une tension supérieure à 100 kV ?",
+    "Qu'est-ce qu'il y a à Sfax ?",
+  ],
+};
 
 async function chargerStats() {
   try {
@@ -70,7 +84,17 @@ document.getElementById("chat-form").addEventListener("submit", (ev) => {
   champ.value = "";
 });
 
-document.getElementById("examples").innerHTML = EXEMPLES.map((q) => `<button type="button">${q}</button>`).join("");
-document.querySelectorAll("#examples button").forEach((b) => b.addEventListener("click", () => poser(b.textContent)));
+// Un clic sur un exemple REMPLIT le champ (sans envoyer) : l'utilisateur peut
+// modifier la question (ex. changer « 60 MW » en « 90 MW ») puis cliquer sur Demander.
+document.getElementById("examples").innerHTML = Object.entries(EXEMPLES).map(([theme, questions]) => `
+  <div class="example-row">
+    <span class="example-theme">${theme}</span>
+    <div class="example-buttons">${questions.map((q) => `<button type="button">${echapper(q)}</button>`).join("")}</div>
+  </div>`).join("");
+document.querySelectorAll("#examples button").forEach((b) => b.addEventListener("click", () => {
+  const champ = document.getElementById("question");
+  champ.value = b.textContent;
+  champ.focus();
+}));
 
 chargerStats();

@@ -108,12 +108,18 @@ with onto:
     # =====================================================================
     tunis, nabeul, tozeur, sfax = (Zone("Zone_Tunis"), Zone("Zone_Nabeul"),
                                    Zone("Zone_Tozeur"), Zone("Zone_Sfax"))
-    AllDifferent([tunis, nabeul, tozeur, sfax])
+    kairouan, bizerte, sousse = (Zone("Zone_Kairouan"), Zone("Zone_Bizerte"),
+                                 Zone("Zone_Sousse"))
+    AllDifferent([tunis, nabeul, tozeur, sfax, kairouan, bizerte, sousse])
 
-    # Production (Mehdi)
+    # Production (Mehdi) — puissances indicatives inspirées des installations tunisiennes
     solaire = CentraleSolaire("Centrale_Solaire_Tozeur", puissanceMW=10.0, estSitueDans=tozeur)
     eolien = ParcEolien("Parc_Eolien_SidiDaoud", puissanceMW=54.0, estSitueDans=nabeul)
     rades = SourceFossile("Centrale_Gaz_Rades", puissanceMW=450.0, estSitueDans=tunis)
+    solaireKairouan = CentraleSolaire("Centrale_Solaire_Kairouan", puissanceMW=100.0,
+                                      estSitueDans=kairouan)
+    eolienBizerte = ParcEolien("Parc_Eolien_Bizerte", puissanceMW=95.0, estSitueDans=bizerte)
+    sousseGaz = SourceFossile("Centrale_Gaz_Sousse", puissanceMW=420.0, estSitueDans=sousse)
 
     # Stockage (Mohamed Elyess)
     batt = Batterie("Batterie_Tozeur", capaciteStockageMWh=20.0,
@@ -131,6 +137,9 @@ with onto:
     eolien.alimente = [com]
     h2.alimente = [com]
     rades.alimente = [res]
+    solaireKairouan.alimente = [usine]
+    eolienBizerte.alimente = [res]
+    sousseGaz.alimente = [com]
 
     # Réseau (Yassine)
     posteSfax = PosteTransformation("Poste_Sfax", estSitueDans=sfax)

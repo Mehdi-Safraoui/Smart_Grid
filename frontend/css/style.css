@@ -112,7 +112,10 @@ tr:hover td { background: #fafcfd; }
 .chat { display: flex; flex-direction: column; gap: 14px; }
 .chat-form { display: flex; gap: 10px; }
 .chat-form input { flex: 1; }
-.examples { display: flex; gap: 8px; flex-wrap: wrap; }
+.examples { display: flex; flex-direction: column; gap: 8px; }
+.example-row { display: grid; grid-template-columns: 140px 1fr; gap: 8px; align-items: start; }
+.example-theme { font-size: 13px; font-weight: 600; color: var(--navy); padding-top: 5px; }
+.example-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
 .examples button { background: var(--green-light); color: var(--green); font-weight: 500; padding: 5px 10px; font-size: 13px; }
 .answer { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; background: #fcfdfe; }
 .answer .q { font-weight: 600; color: var(--navy); margin-bottom: 10px; }
@@ -128,4 +131,5 @@ summary { cursor: pointer; color: var(--muted); font-size: 14px; }
 @media (max-width: 640px) {
   header { gap: 8px; }
   .chat-form { flex-direction: column; }
+  .example-row { grid-template-columns: 1fr; }
 }
