@@ -193,10 +193,12 @@ def analyser(question: str) -> Analyse:
     for t in doc:
         lem = normaliser(t.lemma_)
         # le petit modèle spaCy se trompe parfois de lemme (« alimente » étiqueté NOM) :
-        # on accepte aussi les formes conjuguées qui commencent par le radical du verbe
+        # on accepte aussi les formes conjuguées qui commencent par le radical du verbe,
+        # sauf les noms dérivés du verbe (« alimentation », « stockage »)
         verbe = lem if lem in V.RELATIONS else next(
             (v for v in V.RELATIONS if normaliser(t.text).startswith(v[:-2])
-             and not normaliser(t.text).startswith(v[:-2] + "ation")), None)
+             and not normaliser(t.text).startswith((v[:-2] + "ation", v[:-2] + "age"))),
+            None)
         if verbe:
             rel = V.RELATIONS[verbe]
             suivant = [normaliser(x.text) for x in doc[t.i + 1:t.i + 3]]

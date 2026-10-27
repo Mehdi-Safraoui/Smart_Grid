@@ -333,6 +333,38 @@
   <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">900000.0</consommationKWh>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#Zone_Kairouan">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Zone_Gabes">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Batterie_Kairouan">
+  <rdf:type rdf:resource="#Batterie"/>
+  <stockeEnergieDe rdf:resource="#Parc_Eolien_SidiDaoud"/>
+  <estSitueDans rdf:resource="#Zone_Kairouan"/>
+  <alimente rdf:resource="#Centre_Commercial_Tunis"/>
+  <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30.0</capaciteStockageMWh>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Batterie_Tunis">
+  <rdf:type rdf:resource="#Batterie"/>
+  <stockeEnergieDe rdf:resource="#Centrale_Gaz_Rades"/>
+  <estSitueDans rdf:resource="#Zone_Tunis"/>
+  <alimente rdf:resource="#Residence_ElMenzah"/>
+  <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15.0</capaciteStockageMWh>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Stockage_H2_Gabes">
+  <rdf:type rdf:resource="#StockageHydrogene"/>
+  <stockeEnergieDe rdf:resource="#Centrale_Solaire_Tozeur"/>
+  <estSitueDans rdf:resource="#Zone_Gabes"/>
+  <alimente rdf:resource="#Centre_Commercial_Tunis"/>
+  <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">120.0</capaciteStockageMWh>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#Poste_Sfax">
   <rdf:type rdf:resource="#PosteTransformation"/>
   <estSitueDans rdf:resource="#Zone_Sfax"/>
@@ -374,6 +406,17 @@
   <estSitueDans rdf:resource="#Zone_Tunis"/>
   <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</tensionKV>
 </owl:NamedIndividual>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Zone_Tunis"/>
+    <rdf:Description rdf:about="#Zone_Nabeul"/>
+    <rdf:Description rdf:about="#Zone_Tozeur"/>
+    <rdf:Description rdf:about="#Zone_Sfax"/>
+    <rdf:Description rdf:about="#Zone_Kairouan"/>
+    <rdf:Description rdf:about="#Zone_Gabes"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
 
 <owl:AllDifferent>
   <owl:distinctMembers rdf:parseType="Collection">

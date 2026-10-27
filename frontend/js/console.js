@@ -25,7 +25,24 @@ const EXEMPLES_SPARQL = {
   ?x a ?type .
   FILTER(CONTAINS(LCASE(STR(?x)), "tozeur"))
 }`,
-  "Hiérarchie des classes": `SELECT ?classe ?parent WHERE {
+  "Stockage : capacité totale et moyenne par technologie": `SELECT ?type (COUNT(?s) AS ?nombre)
+       (SUM(?c) AS ?totalMWh) (AVG(?c) AS ?moyenneMWh) WHERE {
+  ?s a ?type ; sg:capaciteStockageMWh ?c .
+  FILTER(?type IN (sg:Batterie, sg:StockageHydrogene))
+} GROUP BY ?type ORDER BY DESC(?totalMWh)`,
+  "Stockage : énergie stockée par source (renouvelable ou non)": `SELECT ?source ?categorie (COUNT(?s) AS ?nbStockages)
+       (SUM(?c) AS ?capaciteMWh) WHERE {
+  ?s sg:stockeEnergieDe ?source ; sg:capaciteStockageMWh ?c .
+  OPTIONAL { ?source a/rdfs:subClassOf* sg:SourceRenouvelable . BIND("renouvelable" AS ?r) }
+  BIND(COALESCE(?r, "fossile") AS ?categorie)
+} GROUP BY ?source ?categorie ORDER BY DESC(?capaciteMWh)`,
+  "Stockage : batteries de plus de 20 MWh hors zone de leur source": `SELECT ?stockage ?capacite ?zoneStockage ?source ?zoneSource WHERE {
+  ?stockage a sg:Batterie ; sg:capaciteStockageMWh ?capacite ;
+            sg:estSitueDans ?zoneStockage ; sg:stockeEnergieDe ?source .
+  ?source sg:estSitueDans ?zoneSource .
+  FILTER(?capacite >= 20 && ?zoneStockage != ?zoneSource)
+}`,
+  "Hiérarchie des classes":`SELECT ?classe ?parent WHERE {
   ?classe rdfs:subClassOf ?parent .
   FILTER(isIRI(?parent))
 } ORDER BY ?parent`,
