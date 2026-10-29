@@ -109,7 +109,9 @@ with onto:
     tunis, nabeul, tozeur, sfax = (Zone("Zone_Tunis"), Zone("Zone_Nabeul"),
                                    Zone("Zone_Tozeur"), Zone("Zone_Sfax"))
     kairouan, sousse = Zone("Zone_Kairouan"), Zone("Zone_Sousse")   # ajoutées pour le réseau
-    AllDifferent([tunis, nabeul, tozeur, sfax, kairouan, sousse])
+    gabes = Zone("Zone_Gabes")                                       # ajoutée pour le stockage
+    # un seul AllDifferent pour toutes les zones : HermiT sait qu'elles sont deux à deux distinctes
+    AllDifferent([tunis, nabeul, tozeur, sfax, kairouan, sousse, gabes])
 
     # Production (Mehdi)
     solaire = CentraleSolaire("Centrale_Solaire_Tozeur", puissanceMW=10.0, estSitueDans=tozeur)
@@ -143,10 +145,6 @@ with onto:
     rades.alimente = [res, ennasr]
 
     # Stockage (Mohamed Elyess) — individus supplémentaires
-    # Nouvelles zones utilisées par la branche stockage (owlready2 réutilise la zone
-    # si un autre membre la crée aussi avec le même nom).
-    kairouan, gabes = Zone("Zone_Kairouan"), Zone("Zone_Gabes")
-    AllDifferent([tunis, nabeul, tozeur, sfax, kairouan, gabes])
     # Batterie lithium-ion qui lisse la production du parc éolien de Sidi Daoud
     batt_kairouan = Batterie("Batterie_Kairouan", capaciteStockageMWh=30.0,
                              stockeEnergieDe=[eolien], estSitueDans=kairouan)

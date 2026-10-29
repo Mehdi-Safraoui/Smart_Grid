@@ -286,6 +286,10 @@
   <rdf:type rdf:resource="#Zone"/>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#Zone_Gabes">
+  <rdf:type rdf:resource="#Zone"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#Centrale_Solaire_Tozeur">
   <rdf:type rdf:resource="#CentraleSolaire"/>
   <estSitueDans rdf:resource="#Zone_Tozeur"/>
@@ -368,10 +372,6 @@
   <rdf:type rdf:resource="#BatimentResidentiel"/>
   <estSitueDans rdf:resource="#Zone_Tunis"/>
   <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45000.0</consommationKWh>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#Zone_Gabes">
-  <rdf:type rdf:resource="#Zone"/>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#Batterie_Kairouan">
@@ -481,18 +481,8 @@
     <rdf:Description rdf:about="#Zone_Tozeur"/>
     <rdf:Description rdf:about="#Zone_Sfax"/>
     <rdf:Description rdf:about="#Zone_Kairouan"/>
-    <rdf:Description rdf:about="#Zone_Gabes"/>
-  </owl:distinctMembers>
-</owl:AllDifferent>
-
-<owl:AllDifferent>
-  <owl:distinctMembers rdf:parseType="Collection">
-    <rdf:Description rdf:about="#Zone_Tunis"/>
-    <rdf:Description rdf:about="#Zone_Nabeul"/>
-    <rdf:Description rdf:about="#Zone_Tozeur"/>
-    <rdf:Description rdf:about="#Zone_Sfax"/>
-    <rdf:Description rdf:about="#Zone_Kairouan"/>
     <rdf:Description rdf:about="#Zone_Sousse"/>
+    <rdf:Description rdf:about="#Zone_Gabes"/>
   </owl:distinctMembers>
 </owl:AllDifferent>
 
