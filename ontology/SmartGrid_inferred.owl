@@ -6,80 +6,6 @@
    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
 >
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#alimente">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:nodeID="N78fa59e3e00c472dbae18754db6cb90e"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
-    <owl:inverseOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#estAlimentePar"/>
-    <rdfs:label xml:lang="fr">alimente</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-    <rdfs:label xml:lang="fr">Zone</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Quartier_ElMenzah">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneDistribution"/>
-    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Tunis"/>
-    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Residence_ElMenzah"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
-    <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</tensionKV>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#SourceRenouvelable">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
-    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceFossile"/>
-    <rdfs:label xml:lang="fr">SourceRenouvelable</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N1e08841305814fab8918aa97254855f9">
-    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">100000.0</xsd:minInclusive>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Usine_Sfax">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentIndustriel"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentAlimenteRenouvelable"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#GrosConsommateur"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax"/>
-    <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">900000.0</consommationKWh>
-    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Tozeur"/>
-    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Kairouan"/>
-    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Tozeur"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N13755a35829e414d9e624f8063aa385b">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
-    <rdf:rest rdf:nodeID="N6c7677bdf8aa44fb8a029203c7960474"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#stockeEnergieDe">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
-    <rdfs:label xml:lang="fr">stockeEnergieDe</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Stockage_H2_Gabes">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#StockageHydrogene"/>
-    <stockeEnergieDe rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Tozeur"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Gabes"/>
-    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centre_Commercial_Tunis"/>
-    <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">120.0</capaciteStockageMWh>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
-    <rdfs:label xml:lang="fr">SourceProduction</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#estSitueDans">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
-    <rdfs:label xml:lang="fr">estSitueDans</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N7ada6c5d85364b038ac82a2bb4a3b2a8">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan"/>
-    <rdf:rest rdf:nodeID="N10c65f4cebfe48c3b826dcac6a1c861b"/>
-  </rdf:Description>
   <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Poste_Usine_Sfax">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
     <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneDistribution"/>
@@ -88,100 +14,33 @@
     <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax"/>
     <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30.0</tensionKV>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#StockageHydrogene">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
-    <rdfs:label xml:lang="fr">StockageHydrogene</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Ne231eca2082049aeb01930bf4862dc38">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#InfrastructureReseau"/>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Na76f2cc1c3af430a917a30dd8ed290a8">
-    <rdf:first rdf:nodeID="N1e08841305814fab8918aa97254855f9"/>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Residence_Tozeur">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentResidentiel"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentAlimenteRenouvelable"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tozeur"/>
-    <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30000.0</consommationKWh>
-    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Tozeur"/>
-    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Tozeur"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Bizerte">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Ne0575af7457d44d79a95d5c58dc7defb">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
-    <rdf:rest rdf:nodeID="N26c58f6143fd4a1599f497157ecb8bc8"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#ParcEolien">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceRenouvelable"/>
-    <rdfs:label xml:lang="fr">ParcEolien</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
-    <rdfs:subClassOf rdf:nodeID="N710f724e6e464221bbe9d5de9eaf1a25"/>
-    <rdfs:label xml:lang="fr">SystemeStockage</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N58b7505048d54e6f9903d5e2cad471de">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:intersectionOf rdf:nodeID="N00c3a47de6ae4346a2dad12af6994241"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Tozeur_Sfax">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneTransport"/>
-    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Tozeur"/>
-    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sfax"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax"/>
-    <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">225.0</tensionKV>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Kairouan_Sousse">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneTransport"/>
-    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Kairouan"/>
-    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sousse"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan"/>
-    <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">225.0</tensionKV>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N710f724e6e464221bbe9d5de9eaf1a25">
+  <rdf:Description rdf:nodeID="Nd0f6feb60b55486cb0130c3d4cfb6ca5">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
-    <owl:onProperty rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#stockeEnergieDe"/>
-    <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
+    <owl:onProperty rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#relie"/>
+    <owl:onClass rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minQualifiedCardinality>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#capaciteStockageMWh">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <rdfs:label xml:lang="fr">capaciteStockageMWh</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Parc_Eolien_SidiDaoud">
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Poste_Kairouan">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ParcEolien"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Nabeul"/>
-    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Hotel_Nabeul"/>
-    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centre_Commercial_Tunis"/>
-    <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">54.0</puissanceMW>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#PosteTransformation"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#GrosConsommateur">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
-    <owl:equivalentClass rdf:nodeID="N55aebb95ec474ac5b41ca7976da9d633"/>
-    <rdfs:label xml:lang="fr">GrosConsommateur</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Kairouan">
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Tunis">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
     <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Batterie"/>
-    <stockeEnergieDe rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Parc_Eolien_SidiDaoud"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan"/>
-    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centre_Commercial_Tunis"/>
-    <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30.0</capaciteStockageMWh>
+    <stockeEnergieDe rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Gaz_Rades"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
+    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Residence_ElMenzah"/>
+    <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15.0</capaciteStockageMWh>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nba82032449ec49d8a788d480bf1337e6">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#estAlimentePar"/>
+    <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceRenouvelable"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N4e0b23bb71e64229b868f29722eefd5e">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sousse"/>
+    <rdf:rest rdf:nodeID="N45071e7ec160469e827eec422c070dc9"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Tozeur">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -192,21 +51,110 @@
     <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Usine_Sfax"/>
     <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20.0</capaciteStockageMWh>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Gabes">
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Kairouan">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Batterie"/>
+    <stockeEnergieDe rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Parc_Eolien_SidiDaoud"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan"/>
+    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centre_Commercial_Tunis"/>
+    <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30.0</capaciteStockageMWh>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#LigneElectrique">
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#InfrastructureReseau"/>
-    <rdfs:subClassOf rdf:nodeID="Nb48470c4236b4c438b94ff773f68785b"/>
-    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#PosteTransformation"/>
-    <rdfs:label xml:lang="fr">LigneElectrique</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
+    <rdfs:subClassOf rdf:nodeID="N7fafac5944cd42eca23a106c51dae53b"/>
+    <rdfs:label xml:lang="fr">BatimentConsommateur</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Poste_Kairouan">
+  <rdf:Description rdf:nodeID="Nbcefe75206a64337a51373222e5f2d51">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Tozeur_Sfax">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneTransport"/>
+    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Tozeur"/>
+    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sfax"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax"/>
+    <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">225.0</tensionKV>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#consommationKWh">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:label xml:lang="fr">consommationKWh</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#capaciteStockageMWh">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:label xml:lang="fr">capaciteStockageMWh</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Quartier_Sfax">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneDistribution"/>
+    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sfax"/>
+    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Usine_Sfax"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax"/>
+    <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</tensionKV>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#SourceRenouvelable">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceFossile"/>
+    <rdfs:label xml:lang="fr">SourceRenouvelable</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Kairouan">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#CentraleSolaire"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan"/>
+    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Usine_Sfax"/>
+    <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">100.0</puissanceMW>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#GrosConsommateur">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
+    <owl:equivalentClass rdf:nodeID="N2d91eb23b0fc490499ee54148ba33b45"/>
+    <rdfs:label xml:lang="fr">GrosConsommateur</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1d9061a16b08434dbe8c3272d30a9c72">
+    <rdf:first rdf:nodeID="Nba82032449ec49d8a788d480bf1337e6"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#BatimentIndustriel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
+    <rdfs:label xml:lang="fr">BatimentIndustriel</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nde2ccd9d2669466091b24704792f3443">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#estSitueDans"/>
+    <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#puissanceMW">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:label xml:lang="fr">puissanceMW</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Residence_ElMenzah">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentResidentiel"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
+    <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12000.0</consommationKWh>
+    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Gaz_Rades"/>
+    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Tunis"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N540a7c3eda4c4020840ae4b93c0f27d1">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan"/>
+    <rdf:rest rdf:nodeID="N991b41d0c728419abcce39ced1e700fc"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sousse">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
     <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#PosteTransformation"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sousse"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Centre_Commercial_Tunis">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -221,6 +169,101 @@
     <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Kairouan"/>
     <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Stockage_H2_Gabes"/>
   </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#tensionKV">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneElectrique"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:label xml:lang="fr">tensionKV</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#relie">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneElectrique"/>
+    <rdfs:range rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
+    <rdfs:label xml:lang="fr">relie</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sfax">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#PosteTransformation"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:label xml:lang="fr">Zone</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#estAlimentePar">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
+    <rdfs:range rdf:nodeID="N0ca285527bf046e9928587f1a300af50"/>
+    <owl:inverseOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#alimente"/>
+    <rdfs:label xml:lang="fr">estAlimentePar</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#CentraleSolaire">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceRenouvelable"/>
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ParcEolien"/>
+    <rdfs:label xml:lang="fr">CentraleSolaire</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
+    <rdfs:label xml:lang="fr">SourceProduction</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Sfax_Sousse">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneTransport"/>
+    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sfax"/>
+    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sousse"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sousse"/>
+    <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">150.0</tensionKV>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Gaz_Rades">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceFossile"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
+    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Residence_ElMenzah"/>
+    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Cite_Ennasr_Tunis"/>
+    <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">450.0</puissanceMW>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Stockage_H2_Gabes">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#StockageHydrogene"/>
+    <stockeEnergieDe rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Tozeur"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Gabes"/>
+    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centre_Commercial_Tunis"/>
+    <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">120.0</capaciteStockageMWh>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Gabes">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#LigneDistribution">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneElectrique"/>
+    <rdfs:label xml:lang="fr">LigneDistribution</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#BatimentResidentiel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
+    <rdfs:label xml:lang="fr">BatimentResidentiel</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N7de8d85dc5204aabae30e1ae47da4139">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
+    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <owl:withRestrictions rdf:nodeID="N7b2a028ca6734b98859b5144498a0407"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#PosteTransformation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#InfrastructureReseau"/>
+    <rdfs:label xml:lang="fr">PosteTransformation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
+    <rdfs:subClassOf rdf:nodeID="Ne78715e74dc047a4b9a6496817ea5b76"/>
+    <rdfs:label xml:lang="fr">SystemeStockage</rdfs:label>
+  </rdf:Description>
   <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Rades_Tunis">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
     <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneTransport"/>
@@ -229,9 +272,76 @@
     <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
     <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">225.0</tensionKV>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="N8c08839ffdc346bdb6474a5cccde30bd">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax"/>
-    <rdf:rest rdf:nodeID="N7ada6c5d85364b038ac82a2bb4a3b2a8"/>
+  <rdf:Description rdf:nodeID="N2a89d08881794633a0448f7033a93f61">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
+    <rdf:rest rdf:nodeID="Nf0834ae204744ca7acb4bc5b618c0baa"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2cefb42f62224d06ab0df6a7efdcb426">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#InfrastructureReseau"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0ed35bb4d9f043e7a9671a0efcdac21e">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
+    <rdf:rest rdf:nodeID="N2cefb42f62224d06ab0df6a7efdcb426"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Usine_Sfax">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentIndustriel"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentAlimenteRenouvelable"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#GrosConsommateur"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax"/>
+    <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">900000.0</consommationKWh>
+    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Tozeur"/>
+    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Kairouan"/>
+    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Tozeur"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Quartier_ElMenzah">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneDistribution"/>
+    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Tunis"/>
+    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Residence_ElMenzah"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
+    <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</tensionKV>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N9d568f0b65ca46ba974f073c02d55588">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+    <owl:members rdf:nodeID="Nb3c892d6e6ca445394592048ae0c645f"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#BatimentAlimenteRenouvelable">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
+    <owl:equivalentClass rdf:nodeID="N7042d892145445d3884e4cea6890a2bc"/>
+    <rdfs:label xml:lang="fr">BatimentAlimenteRenouvelable</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tozeur">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N991b41d0c728419abcce39ced1e700fc">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Bizerte"/>
+    <rdf:rest rdf:nodeID="N4e0b23bb71e64229b868f29722eefd5e"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Parc_Eolien_SidiDaoud">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ParcEolien"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Nabeul"/>
+    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Hotel_Nabeul"/>
+    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centre_Commercial_Tunis"/>
+    <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">54.0</puissanceMW>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Parc_Eolien_Bizerte">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ParcEolien"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Bizerte"/>
+    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Hotel_Nabeul"/>
+    <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">95.0</puissanceMW>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Gaz_Sousse">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceFossile"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sousse"/>
+    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centre_Commercial_Tunis"/>
+    <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">420.0</puissanceMW>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Stockage_H2_SidiDaoud">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -242,29 +352,132 @@
     <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centre_Commercial_Tunis"/>
     <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">50.0</capaciteStockageMWh>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="N26c58f6143fd4a1599f497157ecb8bc8">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#InfrastructureReseau">
+  <rdf:Description rdf:nodeID="N7042d892145445d3884e4cea6890a2bc">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
-    <rdfs:label xml:lang="fr">InfrastructureReseau</rdfs:label>
+    <owl:intersectionOf rdf:nodeID="N829789aaaeb6414ba812b7f9220d0b56"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Parc_Eolien_Bizerte">
+  <rdf:Description rdf:nodeID="N7fafac5944cd42eca23a106c51dae53b">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#estAlimentePar"/>
+    <owl:someValuesFrom rdf:nodeID="N1eefb8170fcd42a09cb1b3667c87a549"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Kairouan_Sousse">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ParcEolien"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Bizerte"/>
-    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Hotel_Nabeul"/>
-    <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">95.0</puissanceMW>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneTransport"/>
+    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Kairouan"/>
+    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sousse"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan"/>
+    <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">225.0</tensionKV>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Residence_ElMenzah">
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Batterie">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#StockageHydrogene"/>
+    <rdfs:label xml:lang="fr">Batterie</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N02256ad018454ee4b9731a05e40cb52d">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
+    <rdf:rest rdf:nodeID="N83a24ae641e8458c81a7fa39d5cfaadb"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6b0522116b82443e898bb9585b80de24">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax"/>
+    <rdf:rest rdf:nodeID="N540a7c3eda4c4020840ae4b93c0f27d1"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N829789aaaeb6414ba812b7f9220d0b56">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
+    <rdf:rest rdf:nodeID="N1d9061a16b08434dbe8c3272d30a9c72"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N715199c861ec4dae84174501a83bdd22">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tozeur"/>
+    <rdf:rest rdf:nodeID="N6b0522116b82443e898bb9585b80de24"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#alimente">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:nodeID="N3e5dd44fa3b04c4a8a98b0ae902a41b0"/>
+    <rdfs:range rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
+    <owl:inverseOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#estAlimentePar"/>
+    <rdfs:label xml:lang="fr">alimente</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Cite_Ennasr_Tunis">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
     <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentResidentiel"/>
     <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
-    <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12000.0</consommationKWh>
+    <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45000.0</consommationKWh>
     <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Gaz_Rades"/>
-    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Tunis"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#LigneElectrique">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#InfrastructureReseau"/>
+    <rdfs:subClassOf rdf:nodeID="Nd0f6feb60b55486cb0130c3d4cfb6ca5"/>
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#PosteTransformation"/>
+    <rdfs:label xml:lang="fr">LigneElectrique</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Residence_Tozeur">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentResidentiel"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentAlimenteRenouvelable"/>
+    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tozeur"/>
+    <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30000.0</consommationKWh>
+    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Tozeur"/>
+    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Tozeur"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nedaccbb7b30c4a35ad4dc728c7a393ee">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N3e5dd44fa3b04c4a8a98b0ae902a41b0">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:unionOf rdf:nodeID="Nfd7a5587514f4afc9b2655f8b8c84a4a"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#estSitueDans">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
+    <rdfs:range rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
+    <rdfs:label xml:lang="fr">estSitueDans</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf rdf:nodeID="Nde2ccd9d2669466091b24704792f3443"/>
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
+    <rdfs:label xml:lang="fr">ComposantSmartGrid</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#ParcEolien">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceRenouvelable"/>
+    <rdfs:label xml:lang="fr">ParcEolien</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#BatimentCommercial">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
+    <rdfs:label xml:lang="fr">BatimentCommercial</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#stockeEnergieDe">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
+    <rdfs:range rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
+    <rdfs:label xml:lang="fr">stockeEnergieDe</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N45071e7ec160469e827eec422c070dc9">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Gabes"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#SourceFossile">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
+    <rdfs:label xml:lang="fr">SourceFossile</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Bizerte">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Tozeur">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -274,42 +487,10 @@
     <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Usine_Sfax"/>
     <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.0</puissanceMW>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="N0e962873827448ab8ed4223d83184cc6">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
-    <owl:onProperty rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#estAlimentePar"/>
-    <owl:someValuesFrom rdf:nodeID="N643686f25af440a3a5aa30ecbb2d184b"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Solaire_Kairouan">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#CentraleSolaire"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan"/>
-    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Usine_Sfax"/>
-    <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">100.0</puissanceMW>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Ne2807830f3ee4c3da3921b9f53544782">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
-    <owl:members rdf:nodeID="N45f6ff416b9b45b3954a8a9c0aaa2a87"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
-    <rdfs:subClassOf rdf:nodeID="N0e962873827448ab8ed4223d83184cc6"/>
-    <rdfs:label xml:lang="fr">BatimentConsommateur</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Batterie">
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#StockageHydrogene">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
     <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
-    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#StockageHydrogene"/>
-    <rdfs:label xml:lang="fr">Batterie</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#BatimentIndustriel">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
-    <rdfs:label xml:lang="fr">BatimentIndustriel</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N643686f25af440a3a5aa30ecbb2d184b">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:unionOf rdf:nodeID="Ne0575af7457d44d79a95d5c58dc7defb"/>
+    <rdfs:label xml:lang="fr">StockageHydrogene</rdfs:label>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Hotel_Nabeul">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -321,189 +502,65 @@
     <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Parc_Eolien_SidiDaoud"/>
     <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Parc_Eolien_Bizerte"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N45f6ff416b9b45b3954a8a9c0aaa2a87">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentResidentiel"/>
-    <rdf:rest rdf:nodeID="N0ccb59034eab4b8ead323b710962b9ae"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#puissanceMW">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <rdfs:label xml:lang="fr">puissanceMW</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sousse">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-    <rdfs:subClassOf rdf:nodeID="N6ae85866c63f4423a322ea9c76cb245d"/>
-    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
-    <rdfs:label xml:lang="fr">ComposantSmartGrid</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#estAlimentePar">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
-    <rdfs:range rdf:nodeID="N30972ef474ef42beada073db31c980e5"/>
-    <owl:inverseOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#alimente"/>
-    <rdfs:label xml:lang="fr">estAlimentePar</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N41db09a67fea470788afec8a90782e1e">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
-    <owl:onProperty rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#estAlimentePar"/>
-    <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceRenouvelable"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N551797630339422d8aeb7b7b9fcd3872">
-    <rdf:first rdf:nodeID="N41db09a67fea470788afec8a90782e1e"/>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#PosteTransformation">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#InfrastructureReseau"/>
-    <rdfs:label xml:lang="fr">PosteTransformation</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Nbbb000b3220344648e5a008828d13fc8">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
-    <rdf:rest rdf:nodeID="N45d4080b7762486e9622bca16428ad28"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N0ccb59034eab4b8ead323b710962b9ae">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentCommercial"/>
-    <rdf:rest rdf:nodeID="Ndccecdc67d4043d28093c350a11a6f31"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N4c03b624f4274763840d12ea738bdcfe">
+  <rdf:Description rdf:nodeID="N997a11f564e3431eb81624948fd46391">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
     <owl:onProperty rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#consommationKWh"/>
-    <owl:someValuesFrom rdf:nodeID="Nc2ea1549fa4c4caca2f57ddfc983ad44"/>
+    <owl:someValuesFrom rdf:nodeID="N7de8d85dc5204aabae30e1ae47da4139"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Sfax_Sousse">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneTransport"/>
-    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sfax"/>
-    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sousse"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sousse"/>
-    <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">150.0</tensionKV>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Ligne_Quartier_Sfax">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneDistribution"/>
-    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sfax"/>
-    <relie rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Usine_Sfax"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax"/>
-    <tensionKV rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</tensionKV>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#LigneTransport">
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#InfrastructureReseau">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneElectrique"/>
-    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneDistribution"/>
-    <rdfs:label xml:lang="fr">LigneTransport</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
+    <rdfs:label xml:lang="fr">InfrastructureReseau</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sousse">
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Poste_Tunis">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
     <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#PosteTransformation"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sousse"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N09e53546645a41c698d9e8265c631ecd">
-    <rdf:first rdf:nodeID="N4c03b624f4274763840d12ea738bdcfe"/>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N6ae85866c63f4423a322ea9c76cb245d">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
-    <owl:onProperty rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#estSitueDans"/>
-    <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N8b70007253b34a7394ea66e09c7841e1">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
-    <owl:members rdf:nodeID="Na19187079056482fb98bab159096c7b0"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N30972ef474ef42beada073db31c980e5">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:unionOf rdf:nodeID="N150b5428c0f8432ea2113324e278b879"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#CentraleSolaire">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceRenouvelable"/>
-    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ParcEolien"/>
-    <rdfs:label xml:lang="fr">CentraleSolaire</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Gaz_Rades">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceFossile"/>
     <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
-    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Residence_ElMenzah"/>
-    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Cite_Ennasr_Tunis"/>
-    <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">450.0</puissanceMW>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Gaz_Sousse">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceFossile"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sousse"/>
-    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centre_Commercial_Tunis"/>
-    <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">420.0</puissanceMW>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Nb48470c4236b4c438b94ff773f68785b">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
-    <owl:onProperty rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#relie"/>
-    <owl:onClass rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
-    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minQualifiedCardinality>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N949d68d0618743da9416c36d38495d76">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
-    <rdf:rest rdf:nodeID="Ne231eca2082049aeb01930bf4862dc38"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N12b44f390ad847689835de1e611194c4">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Cite_Ennasr_Tunis">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentResidentiel"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
-    <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45000.0</consommationKWh>
-    <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Gaz_Rades"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Nabeul">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Batterie_Tunis">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Batterie"/>
-    <stockeEnergieDe rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Centrale_Gaz_Rades"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
-    <alimente rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Residence_ElMenzah"/>
-    <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15.0</capaciteStockageMWh>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Ndccecdc67d4043d28093c350a11a6f31">
+  <rdf:Description rdf:nodeID="Na24d78bd8dc142078ff966e604d4123e">
     <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentIndustriel"/>
     <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
+  <rdf:Description rdf:nodeID="N4dbf4630ffce4a0cab6b5aaf8bc1c707">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Nabeul"/>
+    <rdf:rest rdf:nodeID="N715199c861ec4dae84174501a83bdd22"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#relie">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneElectrique"/>
-    <rdfs:range rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#ComposantSmartGrid"/>
-    <rdfs:label xml:lang="fr">relie</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Nf36537279025484dad537037010fabb5">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDifferent"/>
-    <owl:distinctMembers rdf:nodeID="N13755a35829e414d9e624f8063aa385b"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Na19187079056482fb98bab159096c7b0">
+  <rdf:Description rdf:nodeID="N5fc5566e461b4a4dac0b19202a771c3e">
     <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
-    <rdf:rest rdf:nodeID="Nc60271cd60cd467a95cc2b235d3dc012"/>
+    <rdf:rest rdf:nodeID="Nbcefe75206a64337a51373222e5f2d51"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1dee3e29bb524f3c9985ffacb30c937d">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
+    <rdf:rest rdf:nodeID="N4dbf4630ffce4a0cab6b5aaf8bc1c707"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne78715e74dc047a4b9a6496817ea5b76">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#stockeEnergieDe"/>
+    <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N7b2a028ca6734b98859b5144498a0407">
+    <rdf:first rdf:nodeID="Nc674857ba1c347d4ad272b87e67cfeca"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N83a24ae641e8458c81a7fa39d5cfaadb">
+    <rdf:first rdf:nodeID="N997a11f564e3431eb81624948fd46391"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2d91eb23b0fc490499ee54148ba33b45">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N02256ad018454ee4b9731a05e40cb52d"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0ca285527bf046e9928587f1a300af50">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:unionOf rdf:nodeID="N5fc5566e461b4a4dac0b19202a771c3e"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N779fb2aa8e2f42659eb2993edaf73f8d">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+    <owl:members rdf:nodeID="N2a89d08881794633a0448f7033a93f61"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6a934ee75e224e638d5d87103ec48ab7">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDifferent"/>
+    <owl:distinctMembers rdf:nodeID="N1dee3e29bb524f3c9985ffacb30c937d"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Usine_Textile_Nabeul">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -513,114 +570,57 @@
     <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">150000.0</consommationKWh>
     <estAlimentePar rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Stockage_H2_SidiDaoud"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="Ned1dfe4dada3425381e935f40d4bc6b0">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Gabes"/>
-    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Nc2ea1549fa4c4caca2f57ddfc983ad44">
-    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"/>
-    <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <owl:withRestrictions rdf:nodeID="Na76f2cc1c3af430a917a30dd8ed290a8"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N55aebb95ec474ac5b41ca7976da9d633">
+  <rdf:Description rdf:nodeID="N1eefb8170fcd42a09cb1b3667c87a549">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:intersectionOf rdf:nodeID="N0d3272c2e3e14bd39ef638508fd14a6e"/>
+    <owl:unionOf rdf:nodeID="Na0f9be0c6b854543bb8cf7a15cff7552"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Poste_Tunis">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#PosteTransformation"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tunis"/>
+  <rdf:Description rdf:nodeID="Nfd7a5587514f4afc9b2655f8b8c84a4a">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
+    <rdf:rest rdf:nodeID="N6e4d6e21732f4638a8646dd25f7a457f"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#tensionKV">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneElectrique"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <rdfs:label xml:lang="fr">tensionKV</rdfs:label>
+  <rdf:Description rdf:nodeID="Nf0834ae204744ca7acb4bc5b618c0baa">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
+    <rdf:rest rdf:nodeID="N0ed35bb4d9f043e7a9671a0efcdac21e"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="N1a2d069b222d471dbcc9dd64d83ed5df">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tozeur"/>
-    <rdf:rest rdf:nodeID="N8c08839ffdc346bdb6474a5cccde30bd"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#BatimentAlimenteRenouvelable">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
-    <owl:equivalentClass rdf:nodeID="N58b7505048d54e6f9903d5e2cad471de"/>
-    <rdfs:label xml:lang="fr">BatimentAlimenteRenouvelable</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#consommationKWh">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-    <rdfs:domain rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-    <rdfs:label xml:lang="fr">consommationKWh</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N45d4080b7762486e9622bca16428ad28">
+  <rdf:Description rdf:nodeID="N6e4d6e21732f4638a8646dd25f7a457f">
     <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
     <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#SourceFossile">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
-    <rdfs:label xml:lang="fr">SourceFossile</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N6c7677bdf8aa44fb8a029203c7960474">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Nabeul"/>
-    <rdf:rest rdf:nodeID="N1a2d069b222d471dbcc9dd64d83ed5df"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Tozeur">
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Nabeul">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
     <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="Ndc4cd83b74ba43c2b9fad6712e626452">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sousse"/>
-    <rdf:rest rdf:nodeID="Ned1dfe4dada3425381e935f40d4bc6b0"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N10c65f4cebfe48c3b826dcac6a1c861b">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Bizerte"/>
-    <rdf:rest rdf:nodeID="Ndc4cd83b74ba43c2b9fad6712e626452"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N00c3a47de6ae4346a2dad12af6994241">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
-    <rdf:rest rdf:nodeID="N551797630339422d8aeb7b7b9fcd3872"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Poste_Sfax">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#PosteTransformation"/>
-    <estSitueDans rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#BatimentCommercial">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
-    <rdfs:label xml:lang="fr">BatimentCommercial</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#BatimentResidentiel">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
-    <rdfs:label xml:lang="fr">BatimentResidentiel</rdfs:label>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="Nc60271cd60cd467a95cc2b235d3dc012">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SystemeStockage"/>
-    <rdf:rest rdf:nodeID="N949d68d0618743da9416c36d38495d76"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N0d3272c2e3e14bd39ef638508fd14a6e">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentConsommateur"/>
-    <rdf:rest rdf:nodeID="N09e53546645a41c698d9e8265c631ecd"/>
-  </rdf:Description>
-  <rdf:Description rdf:nodeID="N150b5428c0f8432ea2113324e278b879">
-    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
-    <rdf:rest rdf:nodeID="N12b44f390ad847689835de1e611194c4"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#LigneDistribution">
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#LigneTransport">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
     <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneElectrique"/>
-    <rdfs:label xml:lang="fr">LigneDistribution</rdfs:label>
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#LigneDistribution"/>
+    <rdfs:label xml:lang="fr">LigneTransport</rdfs:label>
   </rdf:Description>
-  <rdf:Description rdf:nodeID="N78fa59e3e00c472dbae18754db6cb90e">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-    <owl:unionOf rdf:nodeID="Nbbb000b3220344648e5a008828d13fc8"/>
+  <rdf:Description rdf:nodeID="Nb3c892d6e6ca445394592048ae0c645f">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentResidentiel"/>
+    <rdf:rest rdf:nodeID="Nf4379d2d7332463e86e7827455700e8d"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf4379d2d7332463e86e7827455700e8d">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#BatimentCommercial"/>
+    <rdf:rest rdf:nodeID="Na24d78bd8dc142078ff966e604d4123e"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na0f9be0c6b854543bb8cf7a15cff7552">
+    <rdf:first rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#SourceProduction"/>
+    <rdf:rest rdf:nodeID="Nedaccbb7b30c4a35ad4dc728c7a393ee"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sousse">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Sfax">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/smartgrid/ontologie#Zone_Kairouan">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/smartgrid/ontologie#Zone"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nc674857ba1c347d4ad272b87e67cfeca">
+    <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">100000.0</xsd:minInclusive>
   </rdf:Description>
 </rdf:RDF>
