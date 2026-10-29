@@ -142,6 +142,25 @@ with onto:
     h2.alimente = [com, textile]   # un stockage n'est pas une SourceRenouvelable
     rades.alimente = [res, ennasr]
 
+    # Stockage (Mohamed Elyess) — individus supplémentaires
+    # Nouvelles zones utilisées par la branche stockage (owlready2 réutilise la zone
+    # si un autre membre la crée aussi avec le même nom).
+    kairouan, gabes = Zone("Zone_Kairouan"), Zone("Zone_Gabes")
+    AllDifferent([tunis, nabeul, tozeur, sfax, kairouan, gabes])
+    # Batterie lithium-ion qui lisse la production du parc éolien de Sidi Daoud
+    batt_kairouan = Batterie("Batterie_Kairouan", capaciteStockageMWh=30.0,
+                             stockeEnergieDe=[eolien], estSitueDans=kairouan)
+    # Batterie de secours de la centrale de Radès (réserve pour le quartier El Menzah)
+    batt_tunis = Batterie("Batterie_Tunis", capaciteStockageMWh=15.0,
+                          stockeEnergieDe=[rades], estSitueDans=tunis)
+    # Hydrogène vert produit à Gabès avec l'excédent solaire de Tozeur (stockage longue durée)
+    h2_gabes = StockageHydrogene("Stockage_H2_Gabes", capaciteStockageMWh=120.0,
+                                 stockeEnergieDe=[solaire], estSitueDans=gabes)
+
+    batt_kairouan.alimente = [com]
+    batt_tunis.alimente = [res]
+    h2_gabes.alimente = [com]
+
     # Réseau (Yassine)
     posteSfax = PosteTransformation("Poste_Sfax", estSitueDans=sfax)
     posteTunis = PosteTransformation("Poste_Tunis", estSitueDans=tunis)

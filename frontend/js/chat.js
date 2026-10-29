@@ -8,6 +8,8 @@ const EXEMPLES = [
   "Combien de bâtiments y a-t-il à Tunis ?",
   "Quels sont les gros consommateurs ?",
   "Liste les sources renouvelables à Tozeur",
+  "Quelle batterie stocke l'énergie de la centrale solaire de Tozeur ?",
+  "Quel stockage a la plus grande capacité ?",
 ];
 
 async function chargerStats() {

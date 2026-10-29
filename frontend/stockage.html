@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SmartGrid — Systèmes de stockage</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* styles propres à la page stockage */
+    .stat .detail { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .jauge { height: 6px; background: var(--border); border-radius: 99px; margin-top: 8px; overflow: hidden; }
+    .jauge span { display: block; height: 100%; background: var(--green); }
+    .badge.h2 { background: #e7f0fb; color: #1f5fa8; }
+    .hint { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+    .verdict { padding: 12px 16px; border-radius: 8px; margin: 14px 0; font-weight: 600; }
+    .verdict.ok { background: var(--green-light); color: var(--green); }
+    .verdict.ko { background: #fdecea; color: var(--red); }
+    .definies { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 12px; }
+    .definies div { border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 14px; }
+    .definies b { color: var(--navy); }
+    select[multiple] { min-height: 92px; }
+  </style>
 </head>
 <body>
   <header>
@@ -23,21 +38,69 @@
     <h1>Systèmes de stockage</h1>
     <p class="subtitle">Batteries et stockage hydrogène — branche gérée par Mohamed Elyess</p>
 
-    <div class="todo">
-      <b>À compléter par Mohamed Elyess.</b> La liste fonctionne déjà. Il reste à ajouter, en suivant
-      <code>production.html</code> et <code>js/production.js</code> : les filtres (type, zone, valeur min/max,
-      recherche), le formulaire d'ajout / modification et le bouton de suppression.
-      Retirez cet encadré une fois terminé.
-    </div>
+    <!-- Statistiques (COUNT / SUM / AVG + GROUP BY) -->
+    <div class="stats" id="stats"></div>
 
-    <!-- TODO : formulaire de filtres (voir production.html) -->
+    <!-- Filtres et recherche (READ + FILTER) -->
+    <section class="card">
+      <form class="toolbar" id="filtres">
+        <label class="field">Recherche<input name="recherche" placeholder="nom…"></label>
+        <label class="field">Type<select name="type">
+          <option value="">Tous</option>
+          <option value="Batterie">Batteries</option>
+          <option value="StockageHydrogene">Stockage hydrogène</option>
+        </select></label>
+        <label class="field">Zone<select name="zone" id="filtre-zone"></select></label>
+        <label class="field">Stocke l'énergie de<select name="source" id="filtre-source"></select></label>
+        <label class="field">Capacité min (MWh)<input name="min_mwh" type="number" min="0" step="any"></label>
+        <label class="field">Capacité max (MWh)<input name="max_mwh" type="number" min="0" step="any"></label>
+        <button type="submit">Filtrer</button>
+        <button type="reset" class="secondary">Effacer</button>
+      </form>
+    </section>
 
+    <!-- Liste -->
     <section class="card">
       <h2>Liste</h2>
       <div id="liste"></div>
     </section>
 
-    <!-- TODO : formulaire d'ajout / modification (voir production.html) -->
+    <!-- Ajout / modification (CREATE + UPDATE) -->
+    <section class="card">
+      <h2 id="form-titre">Ajouter un système de stockage</h2>
+      <form id="form-stockage">
+        <div class="form-grid">
+          <label class="field">Nom (identifiant)<input name="nom" required pattern="[A-Za-z][A-Za-z0-9_]*" placeholder="Batterie_Sfax"></label>
+          <label class="field">Type<select name="type" required>
+            <option value="Batterie">Batterie</option>
+            <option value="StockageHydrogene">Stockage hydrogène</option>
+          </select></label>
+          <label class="field">Capacité (MWh)<input name="capacite" type="number" min="0.001" step="any" required></label>
+          <label class="field">Zone<select name="zone" id="form-zone" required></select></label>
+          <label class="field">Stocke l'énergie de (Ctrl+clic : plusieurs)<select name="stocke" id="form-source" multiple required></select></label>
+          <label class="field">Alimente (bâtiment)<select name="alimente" id="form-batiment"></select></label>
+        </div>
+        <p class="toolbar" style="margin-top:14px">
+          <button type="submit" id="btn-enregistrer">Ajouter</button>
+          <button type="button" class="secondary" id="btn-annuler" hidden>Annuler</button>
+        </p>
+      </form>
+    </section>
+
+    <!-- Valeur ajoutée : raisonneur HermiT -->
+    <section class="card">
+      <h2>🧠 Raisonneur HermiT</h2>
+      <p class="hint">Le serveur SPARQL ne raisonne pas. Ce bouton lance HermiT sur les données actuelles
+        (y compris les ajouts faits dans l'appli) et affiche ce qu'il déduit : classes définies
+        (GrosConsommateur, BatimentAlimenteRenouvelable), relations inverses
+        (alimente ↔ estAlimentePar) et incohérences.</p>
+      <p class="toolbar">
+        <button type="button" id="btn-raisonner">Raisonner</button>
+        <button type="button" class="secondary" id="btn-enregistrer-deductions" disabled>Enregistrer les déductions</button>
+        <button type="button" class="danger" id="btn-incoherence">Tester une incohérence</button>
+      </p>
+      <div id="raisonnement"></div>
+    </section>
   </main>
 
   <script src="js/api.js"></script>

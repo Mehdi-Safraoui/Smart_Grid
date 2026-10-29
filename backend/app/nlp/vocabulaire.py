@@ -22,10 +22,14 @@ CLASSES = {
                       "centrale thermique", "non renouvelable"],
 
     # --- Branche STOCKAGE (Mohamed Elyess) ---
-    "SystemeStockage": ["stockage", "système de stockage", "moyen de stockage"],
-    "Batterie": ["batterie"],
-    "StockageHydrogene": ["hydrogène", "stockage hydrogène", "stockage d'hydrogène", "h2"],
-    # TODO Elyess : ajouter des synonymes (accumulateur, ...)
+    "SystemeStockage": ["stockage", "système de stockage", "moyen de stockage",
+                        "unité de stockage", "installation de stockage", "réserve d'énergie",
+                        "réservoir d'énergie"],
+    "Batterie": ["batterie", "accumulateur", "batterie lithium", "batterie lithium-ion",
+                 "pack de batteries", "stockage électrochimique", "stockage par batterie"],
+    "StockageHydrogene": ["hydrogène", "stockage hydrogène", "stockage d'hydrogène", "h2",
+                          "hydrogène vert", "réservoir d'hydrogène", "pile à combustible",
+                          "power-to-gas"],
 
     # --- Branche CONSOMMATION (Ahmed Amine) ---
     "BatimentConsommateur": ["bâtiment", "consommateur", "bâtiment consommateur", "client",
@@ -85,7 +89,8 @@ ATTRIBUT_PAR_BRANCHE = {
 # unité écrite dans la question -> attribut
 UNITES = {
     "mw": "puissanceMW", "mégawatt": "puissanceMW", "megawatt": "puissanceMW",
-    "mwh": "capaciteStockageMWh",
+    "mwh": "capaciteStockageMWh", "mégawattheure": "capaciteStockageMWh",
+    "megawattheure": "capaciteStockageMWh",
     "kwh": "consommationKWh",
     "kv": "tensionKV", "kilovolt": "tensionKV",
 }
@@ -93,7 +98,7 @@ UNITES = {
 # mots (lemmes) qui indiquent l'attribut concerné
 MOTS_ATTRIBUT = {
     "puissanceMW": ["puissance", "puissant", "produire", "production", "produit"],
-    "capaciteStockageMWh": ["capacité", "stocker"],
+    "capaciteStockageMWh": ["capacité", "stocker", "contenir", "emmagasiner"],
     "consommationKWh": ["consommation", "consommer", "énergivore"],
     "tensionKV": ["tension"],
 }
@@ -108,13 +113,18 @@ RELATIONS = {
                   "objet": "BatimentConsommateur"},
     "fournir": {"propriete": "alimente", "sujet": "SourceProduction",
                 "objet": "BatimentConsommateur"},
+    # Elyess
+    "stocker": {"propriete": "stockeEnergieDe", "sujet": "SystemeStockage",
+                "objet": "SourceProduction"},
+    "emmagasiner": {"propriete": "stockeEnergieDe", "sujet": "SystemeStockage",
+                    "objet": "SourceProduction"},
+
     # Ahmed Amine : « Quels bâtiments dépendent de la centrale de Radès ? »
     # -> relation inverse estAlimentePar (le bâtiment est le sujet du verbe)
     "approvisionner": {"propriete": "alimente", "sujet": "SourceProduction",
                        "objet": "BatimentConsommateur"},
     "dependre": {"propriete": "estAlimentePar", "sujet": "BatimentConsommateur",
                  "objet": "SourceProduction"},
-    # TODO Elyess : "stocker" -> stockeEnergieDe (sujet SystemeStockage, objet SourceProduction)
     # Yassine
     # participe_sans_inversion : « les lignes reliées au poste » -> la ligne reste le sujet de
     # relie (seul « par » introduit un vrai complément d'agent, comme « alimentés par »)
