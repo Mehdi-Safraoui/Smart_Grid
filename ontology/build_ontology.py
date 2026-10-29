@@ -108,7 +108,8 @@ with onto:
     # =====================================================================
     tunis, nabeul, tozeur, sfax = (Zone("Zone_Tunis"), Zone("Zone_Nabeul"),
                                    Zone("Zone_Tozeur"), Zone("Zone_Sfax"))
-    AllDifferent([tunis, nabeul, tozeur, sfax])
+    kairouan, sousse = Zone("Zone_Kairouan"), Zone("Zone_Sousse")   # ajoutées pour le réseau
+    AllDifferent([tunis, nabeul, tozeur, sfax, kairouan, sousse])
 
     # Production (Mehdi)
     solaire = CentraleSolaire("Centrale_Solaire_Tozeur", puissanceMW=10.0, estSitueDans=tozeur)
@@ -148,6 +149,15 @@ with onto:
     LigneDistribution("Ligne_Poste_Usine_Sfax", tensionKV=30.0, relie=[posteSfax, usine], estSitueDans=sfax)
     LigneTransport("Ligne_Rades_Tunis", tensionKV=225.0, relie=[rades, posteTunis], estSitueDans=tunis)
     LigneDistribution("Ligne_Quartier_ElMenzah", tensionKV=0.4, relie=[posteTunis, res], estSitueDans=tunis)
+    # Axe Kairouan - Sousse et desserte basse tension de Sfax
+    posteKairouan = PosteTransformation("Poste_Kairouan", estSitueDans=kairouan)
+    posteSousse = PosteTransformation("Poste_Sousse", estSitueDans=sousse)
+    LigneTransport("Ligne_Kairouan_Sousse", tensionKV=225.0,
+                   relie=[posteKairouan, posteSousse], estSitueDans=kairouan)
+    LigneTransport("Ligne_Sfax_Sousse", tensionKV=150.0,
+                   relie=[posteSfax, posteSousse], estSitueDans=sousse)
+    LigneDistribution("Ligne_Quartier_Sfax", tensionKV=0.4, relie=[posteSfax, usine],
+                      estSitueDans=sfax)
 
     for e in list(onto.classes()) + list(onto.properties()):
         e.label = [locstr(e.name, "fr")]

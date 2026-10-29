@@ -55,6 +55,25 @@ const EXEMPLES_SPARQL = {
   ?x a ?type .
   FILTER(CONTAINS(LCASE(STR(?x)), "tozeur"))
 }`,
+  "Réseau : nombre de lignes et tension moyenne par type": `SELECT ?type (COUNT(?ligne) AS ?nombre)
+       (AVG(?tension) AS ?tensionMoyenne) (MAX(?tension) AS ?tensionMax) WHERE {
+  VALUES ?type { sg:LigneTransport sg:LigneDistribution }
+  ?ligne a ?type ;
+         sg:tensionKV ?tension .
+} GROUP BY ?type`,
+  "Réseau : lignes raccordées à chaque poste": `SELECT ?poste (COUNT(DISTINCT ?ligne) AS ?nbLignes)
+       (GROUP_CONCAT(DISTINCT STRAFTER(STR(?ligne), "#"); separator=", ") AS ?lignes) WHERE {
+  ?poste a sg:PosteTransformation .
+  ?ligne sg:relie ?poste .
+} GROUP BY ?poste ORDER BY DESC(?nbLignes)`,
+  "Réseau : parcours source → ligne → poste → ligne → bâtiment": `SELECT DISTINCT ?source ?transport ?poste ?distribution ?batiment WHERE {
+  ?source a/rdfs:subClassOf* sg:SourceProduction .
+  ?transport sg:relie ?source , ?poste .
+  ?poste a sg:PosteTransformation .
+  ?distribution a sg:LigneDistribution ;
+                sg:relie ?poste , ?batiment .
+  ?batiment a/rdfs:subClassOf* sg:BatimentConsommateur .
+}`,
   "Hiérarchie des classes": `SELECT ?classe ?parent WHERE {
   ?classe rdfs:subClassOf ?parent .
   FILTER(isIRI(?parent))

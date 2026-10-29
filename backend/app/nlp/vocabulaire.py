@@ -48,13 +48,16 @@ CLASSES = {
                                      "bâtiment alimenté en énergie verte", "bâtiment propre"],
 
     # --- Branche RÉSEAU (Yassine) ---
-    "InfrastructureReseau": ["infrastructure", "infrastructure du réseau", "équipement du réseau"],
-    "LigneElectrique": ["ligne", "ligne électrique", "câble"],
-    "LigneTransport": ["ligne de transport", "ligne haute tension", "haute tension"],
-    "LigneDistribution": ["ligne de distribution", "basse tension", "moyenne tension"],
-    "PosteTransformation": ["poste", "poste de transformation", "transformateur"],
-    "Zone": ["zone", "région", "ville"],
-    # TODO Yassine : ajouter des synonymes
+    "InfrastructureReseau": ["infrastructure", "infrastructure du réseau", "équipement du réseau",
+                             "élément du réseau", "réseau électrique", "réseau"],
+    "LigneElectrique": ["ligne", "ligne électrique", "câble", "liaison", "conducteur"],
+    "LigneTransport": ["ligne de transport", "ligne haute tension", "haute tension",
+                       "ligne THT", "très haute tension", "ligne HT", "transport"],
+    "LigneDistribution": ["ligne de distribution", "basse tension", "moyenne tension",
+                          "ligne BT", "ligne MT", "distribution", "desserte"],
+    "PosteTransformation": ["poste", "poste de transformation", "transformateur",
+                            "poste électrique", "poste source", "sous-station"],
+    "Zone": ["zone", "région", "ville", "gouvernorat"],
 }
 
 # Branche de chaque classe -> sert à choisir l'attribut numérique par défaut
@@ -112,7 +115,15 @@ RELATIONS = {
     "dependre": {"propriete": "estAlimentePar", "sujet": "BatimentConsommateur",
                  "objet": "SourceProduction"},
     # TODO Elyess : "stocker" -> stockeEnergieDe (sujet SystemeStockage, objet SourceProduction)
-    # TODO Yassine : "relier" / "connecter" -> relie (sujet LigneElectrique, objet ComposantSmartGrid)
+    # Yassine
+    # participe_sans_inversion : « les lignes reliées au poste » -> la ligne reste le sujet de
+    # relie (seul « par » introduit un vrai complément d'agent, comme « alimentés par »)
+    "relier": {"propriete": "relie", "sujet": "LigneElectrique", "objet": "ComposantSmartGrid",
+               "participe_sans_inversion": True},
+    "connecter": {"propriete": "relie", "sujet": "LigneElectrique", "objet": "ComposantSmartGrid",
+                  "participe_sans_inversion": True},
+    "raccorder": {"propriete": "relie", "sujet": "LigneElectrique", "objet": "ComposantSmartGrid",
+                  "participe_sans_inversion": True},
 }
 
 # ---------------------------------------------------------------------------
