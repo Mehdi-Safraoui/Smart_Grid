@@ -22,30 +22,46 @@ CLASSES = {
                       "centrale thermique", "non renouvelable"],
 
     # --- Branche STOCKAGE (Mohamed Elyess) ---
-    "SystemeStockage": ["stockage", "système de stockage", "moyen de stockage"],
-    "Batterie": ["batterie"],
-    "StockageHydrogene": ["hydrogène", "stockage hydrogène", "stockage d'hydrogène", "h2"],
-    # TODO Elyess : ajouter des synonymes (accumulateur, ...)
+    "SystemeStockage": ["stockage", "système de stockage", "moyen de stockage",
+                        "unité de stockage", "installation de stockage", "réserve d'énergie",
+                        "réservoir d'énergie"],
+    "Batterie": ["batterie", "accumulateur", "batterie lithium", "batterie lithium-ion",
+                 "pack de batteries", "stockage électrochimique", "stockage par batterie"],
+    "StockageHydrogene": ["hydrogène", "stockage hydrogène", "stockage d'hydrogène", "h2",
+                          "hydrogène vert", "réservoir d'hydrogène", "pile à combustible",
+                          "power-to-gas"],
 
     # --- Branche CONSOMMATION (Ahmed Amine) ---
-    "BatimentConsommateur": ["bâtiment", "consommateur", "bâtiment consommateur", "client"],
+    "BatimentConsommateur": ["bâtiment", "consommateur", "bâtiment consommateur", "client",
+                             "édifice", "établissement", "site consommateur"],
     "BatimentResidentiel": ["résidence", "bâtiment résidentiel", "résidentiel", "logement",
-                            "maison", "habitation"],
-    "BatimentCommercial": ["centre commercial", "bâtiment commercial", "commercial", "magasin",
-                           "commerce"],
-    "BatimentIndustriel": ["usine", "bâtiment industriel", "industriel", "industrie"],
-    "GrosConsommateur": ["gros consommateur", "grand consommateur"],
-    "BatimentAlimenteRenouvelable": ["bâtiment vert", "alimenté en renouvelable"],
-    # TODO Ahmed : ajouter des synonymes (immeuble, appartement, ...)
+                            "maison", "habitation", "immeuble", "appartement", "villa", "cité",
+                            "foyer", "quartier résidentiel"],
+    # le tertiaire (hôtel, hôpital, école, bureaux) est rangé dans BatimentCommercial.
+    # Pas de « centre commercial » ici : « centre » devient l'alias de Centre_Commercial_Tunis,
+    # sinon « le centre commercial » désignerait tous les bâtiments commerciaux (hôtel compris)
+    "BatimentCommercial": ["bâtiment commercial", "commercial", "magasin",
+                           "commerce", "supermarché", "hôtel", "hôpital", "clinique", "école",
+                           "bureau", "tertiaire", "bâtiment tertiaire"],
+    "BatimentIndustriel": ["usine", "bâtiment industriel", "industriel", "industrie", "fabrique",
+                           "atelier", "cimenterie", "site industriel"],
+    "GrosConsommateur": ["gros consommateur", "grand consommateur", "bâtiment énergivore",
+                         "gros client"],
+    "BatimentAlimenteRenouvelable": ["bâtiment vert", "alimenté en renouvelable",
+                                     "alimenté par du renouvelable", "bâtiment écologique",
+                                     "bâtiment alimenté en énergie verte", "bâtiment propre"],
 
     # --- Branche RÉSEAU (Yassine) ---
-    "InfrastructureReseau": ["infrastructure", "infrastructure du réseau", "équipement du réseau"],
-    "LigneElectrique": ["ligne", "ligne électrique", "câble"],
-    "LigneTransport": ["ligne de transport", "ligne haute tension", "haute tension"],
-    "LigneDistribution": ["ligne de distribution", "basse tension", "moyenne tension"],
-    "PosteTransformation": ["poste", "poste de transformation", "transformateur"],
-    "Zone": ["zone", "région", "ville"],
-    # TODO Yassine : ajouter des synonymes
+    "InfrastructureReseau": ["infrastructure", "infrastructure du réseau", "équipement du réseau",
+                             "élément du réseau", "réseau électrique", "réseau"],
+    "LigneElectrique": ["ligne", "ligne électrique", "câble", "liaison", "conducteur"],
+    "LigneTransport": ["ligne de transport", "ligne haute tension", "haute tension",
+                       "ligne THT", "très haute tension", "ligne HT", "transport"],
+    "LigneDistribution": ["ligne de distribution", "basse tension", "moyenne tension",
+                          "ligne BT", "ligne MT", "distribution", "desserte"],
+    "PosteTransformation": ["poste", "poste de transformation", "transformateur",
+                            "poste électrique", "poste source", "sous-station"],
+    "Zone": ["zone", "région", "ville", "gouvernorat"],
 }
 
 # Branche de chaque classe -> sert à choisir l'attribut numérique par défaut
@@ -73,7 +89,8 @@ ATTRIBUT_PAR_BRANCHE = {
 # unité écrite dans la question -> attribut
 UNITES = {
     "mw": "puissanceMW", "mégawatt": "puissanceMW", "megawatt": "puissanceMW",
-    "mwh": "capaciteStockageMWh",
+    "mwh": "capaciteStockageMWh", "mégawattheure": "capaciteStockageMWh",
+    "megawattheure": "capaciteStockageMWh",
     "kwh": "consommationKWh",
     "kv": "tensionKV", "kilovolt": "tensionKV",
 }
@@ -81,7 +98,7 @@ UNITES = {
 # mots (lemmes) qui indiquent l'attribut concerné
 MOTS_ATTRIBUT = {
     "puissanceMW": ["puissance", "puissant", "produire", "production", "produit"],
-    "capaciteStockageMWh": ["capacité", "stocker"],
+    "capaciteStockageMWh": ["capacité", "stocker", "contenir", "emmagasiner"],
     "consommationKWh": ["consommation", "consommer", "énergivore"],
     "tensionKV": ["tension"],
 }
@@ -96,8 +113,27 @@ RELATIONS = {
                   "objet": "BatimentConsommateur"},
     "fournir": {"propriete": "alimente", "sujet": "SourceProduction",
                 "objet": "BatimentConsommateur"},
-    # TODO Elyess : "stocker" -> stockeEnergieDe (sujet SystemeStockage, objet SourceProduction)
-    # TODO Yassine : "relier" / "connecter" -> relie (sujet LigneElectrique, objet ComposantSmartGrid)
+    # Elyess
+    "stocker": {"propriete": "stockeEnergieDe", "sujet": "SystemeStockage",
+                "objet": "SourceProduction"},
+    "emmagasiner": {"propriete": "stockeEnergieDe", "sujet": "SystemeStockage",
+                    "objet": "SourceProduction"},
+
+    # Ahmed Amine : « Quels bâtiments dépendent de la centrale de Radès ? »
+    # -> relation inverse estAlimentePar (le bâtiment est le sujet du verbe)
+    "approvisionner": {"propriete": "alimente", "sujet": "SourceProduction",
+                       "objet": "BatimentConsommateur"},
+    "dependre": {"propriete": "estAlimentePar", "sujet": "BatimentConsommateur",
+                 "objet": "SourceProduction"},
+    # Yassine
+    # participe_sans_inversion : « les lignes reliées au poste » -> la ligne reste le sujet de
+    # relie (seul « par » introduit un vrai complément d'agent, comme « alimentés par »)
+    "relier": {"propriete": "relie", "sujet": "LigneElectrique", "objet": "ComposantSmartGrid",
+               "participe_sans_inversion": True},
+    "connecter": {"propriete": "relie", "sujet": "LigneElectrique", "objet": "ComposantSmartGrid",
+                  "participe_sans_inversion": True},
+    "raccorder": {"propriete": "relie", "sujet": "LigneElectrique", "objet": "ComposantSmartGrid",
+                  "participe_sans_inversion": True},
 }
 
 # ---------------------------------------------------------------------------
@@ -114,6 +150,28 @@ COMPARATEURS = [  # (expression, opérateur SPARQL) — les plus longues d'abord
 ]
 
 MOTS_COMPTAGE = ["combien", "nombre"]
+# agrégats sur l'attribut numérique (« consommation totale », « puissance moyenne »)
+MOTS_SOMME = ["total", "totale", "somme", "cumulé", "cumulée"]
+MOTS_MOYENNE = ["moyenne", "moyen"]
 MOTS_MAX = ["le plus", "la plus", "les plus", "maximum", "max", "plus grand", "plus grande"]
 MOTS_MIN = ["le moins", "la moins", "les moins", "minimum", "min", "plus petit", "plus petite",
             "plus faible"]
+
+# ---------------------------------------------------------------------------
+# 5. REGROUPEMENT (GROUP BY) — Mehdi
+#    « Quelle est la puissance installée par zone ? », « Combien de sources par type ? »
+# ---------------------------------------------------------------------------
+REGROUPEMENTS = {
+    "zone": ["par zone", "par ville", "par région", "par gouvernorat", "pour chaque zone",
+             "pour chaque ville", "selon la zone", "zone par zone", "dans chaque zone"],
+    "type": ["par type", "par catégorie", "par technologie", "pour chaque type",
+             "selon le type", "par famille", "type par type"],
+}
+# « répartition des sources » sans précision : on regroupe par type
+MOTS_REPARTITION = ["répartition", "repartition", "ventilation"]
+
+# Classes « feuilles » (celles qu'on instancie) : un élément est compté dans UN seul type
+TYPES_FEUILLES = ["CentraleSolaire", "ParcEolien", "SourceFossile", "Batterie",
+                  "StockageHydrogene", "BatimentResidentiel", "BatimentCommercial",
+                  "BatimentIndustriel", "LigneTransport", "LigneDistribution",
+                  "PosteTransformation"]

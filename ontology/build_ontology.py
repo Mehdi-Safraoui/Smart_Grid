@@ -108,9 +108,10 @@ with onto:
     # =====================================================================
     tunis, nabeul, tozeur, sfax = (Zone("Zone_Tunis"), Zone("Zone_Nabeul"),
                                    Zone("Zone_Tozeur"), Zone("Zone_Sfax"))
-    kairouan, bizerte, sousse = (Zone("Zone_Kairouan"), Zone("Zone_Bizerte"),
-                                 Zone("Zone_Sousse"))
-    AllDifferent([tunis, nabeul, tozeur, sfax, kairouan, bizerte, sousse])
+    # Zones ajoutées par les branches (une seule déclaration, toutes différentes deux à deux)
+    kairouan, bizerte, sousse, gabes = (Zone("Zone_Kairouan"), Zone("Zone_Bizerte"),
+                                        Zone("Zone_Sousse"), Zone("Zone_Gabes"))
+    AllDifferent([tunis, nabeul, tozeur, sfax, kairouan, bizerte, sousse, gabes])
 
     # Production (Mehdi) — puissances indicatives inspirées des installations tunisiennes
     solaire = CentraleSolaire("Centrale_Solaire_Tozeur", puissanceMW=10.0, estSitueDans=tozeur)
@@ -131,15 +132,42 @@ with onto:
     res = BatimentResidentiel("Residence_ElMenzah", consommationKWh=12000.0, estSitueDans=tunis)
     com = BatimentCommercial("Centre_Commercial_Tunis", consommationKWh=250000.0, estSitueDans=tunis)
     usine = BatimentIndustriel("Usine_Sfax", consommationKWh=900000.0, estSitueDans=sfax)
+    # Un individu par cas des deux classes définies (gros consommateur ? alimenté en renouvelable ?)
+    hotel = BatimentCommercial("Hotel_Nabeul", consommationKWh=180000.0,   # gros + renouvelable
+                               estSitueDans=nabeul)
+    textile = BatimentIndustriel("Usine_Textile_Nabeul", consommationKWh=150000.0,   # gros seulement
+                                 estSitueDans=nabeul)
+    resTozeur = BatimentResidentiel("Residence_Tozeur", consommationKWh=30000.0,   # renouvelable seulement
+                                    estSitueDans=tozeur)
+    ennasr = BatimentResidentiel("Cite_Ennasr_Tunis", consommationKWh=45000.0,   # aucun des deux
+                                 estSitueDans=tunis)
 
-    solaire.alimente = [usine]
-    batt.alimente = [usine]
-    eolien.alimente = [com]
-    h2.alimente = [com]
-    rades.alimente = [res]
+    solaire.alimente = [usine, resTozeur]
+    batt.alimente = [usine, resTozeur]
+    eolien.alimente = [com, hotel]
+    h2.alimente = [com, textile]   # un stockage n'est pas une SourceRenouvelable
+    rades.alimente = [res, ennasr]
+
+    # Production (Mehdi) : nouvelles sources
     solaireKairouan.alimente = [usine]
-    eolienBizerte.alimente = [res]
+    eolienBizerte.alimente = [hotel]
     sousseGaz.alimente = [com]
+
+    # Stockage (Mohamed Elyess) — individus supplémentaires
+    # (zones Kairouan et Gabès déclarées avec les autres, en haut de la section)
+    # Batterie lithium-ion qui lisse la production du parc éolien de Sidi Daoud
+    batt_kairouan = Batterie("Batterie_Kairouan", capaciteStockageMWh=30.0,
+                             stockeEnergieDe=[eolien], estSitueDans=kairouan)
+    # Batterie de secours de la centrale de Radès (réserve pour le quartier El Menzah)
+    batt_tunis = Batterie("Batterie_Tunis", capaciteStockageMWh=15.0,
+                          stockeEnergieDe=[rades], estSitueDans=tunis)
+    # Hydrogène vert produit à Gabès avec l'excédent solaire de Tozeur (stockage longue durée)
+    h2_gabes = StockageHydrogene("Stockage_H2_Gabes", capaciteStockageMWh=120.0,
+                                 stockeEnergieDe=[solaire], estSitueDans=gabes)
+
+    batt_kairouan.alimente = [com]
+    batt_tunis.alimente = [res]
+    h2_gabes.alimente = [com]
 
     # Réseau (Yassine)
     posteSfax = PosteTransformation("Poste_Sfax", estSitueDans=sfax)
@@ -148,6 +176,15 @@ with onto:
     LigneDistribution("Ligne_Poste_Usine_Sfax", tensionKV=30.0, relie=[posteSfax, usine], estSitueDans=sfax)
     LigneTransport("Ligne_Rades_Tunis", tensionKV=225.0, relie=[rades, posteTunis], estSitueDans=tunis)
     LigneDistribution("Ligne_Quartier_ElMenzah", tensionKV=0.4, relie=[posteTunis, res], estSitueDans=tunis)
+    # Axe Kairouan - Sousse et desserte basse tension de Sfax
+    posteKairouan = PosteTransformation("Poste_Kairouan", estSitueDans=kairouan)
+    posteSousse = PosteTransformation("Poste_Sousse", estSitueDans=sousse)
+    LigneTransport("Ligne_Kairouan_Sousse", tensionKV=225.0,
+                   relie=[posteKairouan, posteSousse], estSitueDans=kairouan)
+    LigneTransport("Ligne_Sfax_Sousse", tensionKV=150.0,
+                   relie=[posteSfax, posteSousse], estSitueDans=sousse)
+    LigneDistribution("Ligne_Quartier_Sfax", tensionKV=0.4, relie=[posteSfax, usine],
+                      estSitueDans=sfax)
 
     for e in list(onto.classes()) + list(onto.properties()):
         e.label = [locstr(e.name, "fr")]

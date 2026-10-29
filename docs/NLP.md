@@ -18,7 +18,7 @@ La phrase est découpée en tokens. Pour chacun, spaCy donne son lemme et sa cat
 On normalise ensuite le texte (minuscules, sans accents), pour que « Éolienne » et « eolienne » soient reconnus pareil.
 
 ### 2. Reconnaissance des entités
-- Le **PhraseMatcher** compare la phrase, et sa version lemmatisée, au vocabulaire de l'ontologie (`vocabulaire.py`). Grâce aux lemmes, « sources » au pluriel retrouve « source » → **classe `SourceProduction`**.
+- Le **PhraseMatcher** compare la phrase au vocabulaire de l'ontologie (`vocabulaire.py`) sous trois formes : les mots, les lemmes donnés par spaCy, et les mots ramenés au singulier. Grâce à ça, « sources renouvelables » au pluriel retrouve « source renouvelable » → **classe `SourceRenouvelable`**, même quand le petit modèle spaCy ne lemmatise pas l'adjectif.
 - Les zones et les individus sont lus directement dans la base. Un individu ajouté depuis l'appli est donc reconnu tout de suite.
 - Une expression régulière repère le comparateur, le nombre et l'unité : `plus de 50 MW` → **filtre `> 50`**, et l'unité MW désigne l'attribut **`puissanceMW`**.
 - Si plusieurs expressions se chevauchent, on garde la plus longue : « centrale solaire » l'emporte sur « centrale ».
@@ -31,6 +31,8 @@ On normalise ensuite le texte (minuscules, sans accents), pour que « Éolienne 
 | « le plus / le moins » | superlatif → `ORDER BY … LIMIT 1` |
 | verbe d'une relation (« alimente », « alimentés par ») | relation, avec le sens déduit de la voix (active ou passive) et de la position des entités par rapport au verbe |
 | un individu seul | détail → toutes ses propriétés |
+| « total », « somme », « moyenne » (hors entité) | agrégat → `SUM` / `AVG` sur l'attribut |
+| « par zone », « par type », « répartition » | regroupement → `GROUP BY ?zone` ou `?type`, avec `COUNT` et, si un attribut est demandé, `SUM` / `AVG` (dans une sous-requête `SELECT DISTINCT` pour ne compter chaque élément qu'une fois) |
 | sinon | liste |
 
 ### 4. Génération de la requête SPARQL
@@ -62,11 +64,23 @@ l'analyse détaillée (tokens, entités, intention, requête) dans « Voir l'ana
 - Quels sont les gros consommateurs ?
 - Quel stockage a la plus grande capacité ?
 - Quelles lignes ont une tension supérieure à 100 kV ?
+- Quelles lignes sont reliées au poste de Sousse ?
+- Qu'est-ce que relie la ligne Tozeur Sfax ?
+- Combien de postes y a-t-il ?
 - Qui alimente l'usine de Sfax ?
 - Quels bâtiments sont alimentés par le parc éolien ?
 - Qu'alimente la batterie de Tozeur ?
 - Donne-moi des infos sur Radès
 - Qu'est-ce qu'il y a à Sfax ?
+- Quelle est la consommation totale des bâtiments à Tunis ?
+- Quels bâtiments dépendent de la centrale de Radès ?
+- Qu'est-ce qui alimente l'usine textile ?
+- Quelle est la puissance installée par zone ?
+- Combien de sources par type ?
+- Quelle est la puissance moyenne des sources par type ?
+- Combien de sources renouvelables par zone ?
+- Quelle est la consommation totale par zone ?
+- Répartition des stockages
 
 ## Limites (à connaître si la prof pose la question)
 - Le vocabulaire est défini à la main : un mot absent de `vocabulaire.py` n'est pas compris. C'est pour ça que chacun ajoute les synonymes de sa branche.

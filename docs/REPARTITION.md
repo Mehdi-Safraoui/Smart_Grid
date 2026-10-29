@@ -89,9 +89,12 @@ Deux règles techniques :
 - **À faire :**
   - ✅ 3 individus de plus : `Centrale_Solaire_Kairouan` (100 MW), `Parc_Eolien_Bizerte` (95 MW), `Centrale_Gaz_Sousse` (420 MW), avec les zones Kairouan, Bizerte et Sousse.
   - ✅ 10 questions NLP Production testées (`test_nlp_production*`).
+  - ✅ Ajout au moteur NLP : intention **regroupement** (`GROUP BY` par zone ou par type) + reconnaissance robuste au pluriel.
+  - ✅ Test d'incohérence HermiT : `ontology/test_incoherence_production.py` (5 axiomes + classement automatique).
+  - ✅ 3 requêtes Production dans la console SPARQL. Détails dans `docs/PRODUCTION.md`.
   - Fuseki pour la soutenance (`docker compose up -d` puis `load_fuseki.py`).
   - Fusionner les Pull Requests et mettre à jour la présentation.
-- **Scénario :** « J'ajoute depuis la page Production la centrale solaire de Gafsa (120 MW) qui alimente l'usine de Sfax → elle apparaît dans la liste → je demande à l'assistant *Qui alimente l'usine de Sfax ?* → elle sort avec les centrales de Tozeur et de Kairouan et la batterie. »
+- **Scénario :** voir `docs/PRODUCTION.md`, section *Scénario de démo*.
 - **Valeur ajoutée :** ✅ tableau de bord en haut de la page Production : puissance installée, part renouvelable, graphiques par zone, par type et par bâtiment. Il repose sur des requêtes SPARQL d'agrégation (SUM, COUNT, GROUP BY) servies par `GET /api/production/tableau-de-bord`, et se met à jour après chaque ajout ou modification.
 
 ### Mohamed Elyess — Stockage

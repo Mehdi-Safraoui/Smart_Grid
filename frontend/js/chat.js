@@ -7,20 +7,24 @@ const EXEMPLES = {
   "⚡ Production": [
     "Quelle est la source la plus puissante ?",
     "Quels parcs éoliens produisent plus de 60 MW ?",
-    "Combien de sources renouvelables y a-t-il ?",
+    "Quelle est la puissance installée par zone ?",
+    "Combien de sources par type ?",
     "Qui alimente l'usine de Sfax ?",
   ],
   "🔋 Stockage": [            // Mohamed Elyess
+    "Quelle batterie stocke l'énergie de la centrale solaire de Tozeur ?",
     "Quel stockage a la plus grande capacité ?",
-    "Quelles sont les batteries ?",
+    "Combien de batteries y a-t-il ?",
   ],
   "🏢 Consommation": [        // Ahmed Amine
-    "Quels bâtiments consomment plus de 100 000 kWh ?",
     "Quels sont les gros consommateurs ?",
+    "Quelle est la consommation totale des bâtiments à Tunis ?",
+    "Quels bâtiments dépendent de la centrale de Radès ?",
   ],
   "🔌 Réseau": [              // Yassine
     "Quelles lignes ont une tension supérieure à 100 kV ?",
-    "Qu'est-ce qu'il y a à Sfax ?",
+    "Quelles lignes sont reliées au poste de Sousse ?",
+    "Qu'est-ce que relie la ligne Tozeur Sfax ?",
   ],
 };
 

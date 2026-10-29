@@ -1,9 +1,9 @@
 // =====================================================================
 // Communication front -> back (utilisé par toutes les pages)
 // =====================================================================
-// Si le front est servi par FastAPI (http://localhost:8000), API_URL reste vide.
-// Si vous ouvrez les pages avec Live Server, mettez "http://localhost:8000".
-const API_URL = location.port === "8000" ? "" : "http://localhost:8000";
+// Si le front est servi par FastAPI (quel que soit son port), API_URL reste vide.
+// Avec Live Server (port 5500) ou en ouvrant le fichier directement, on vise http://localhost:8000.
+const API_URL = location.protocol === "file:" || location.port === "5500" ? "http://localhost:8000" : "";
 
 async function api(chemin, { method = "GET", body, params } = {}) {
   let url = API_URL + chemin;

@@ -40,11 +40,18 @@ def normaliser(texte: str) -> str:
     return "".join(c for c in texte if unicodedata.category(c) != "Mn")
 
 
-def _sequences(doc) -> tuple[list[str], list[str]]:
-    """Deux versions de la phrase : mots normalisés et lemmes normalisés."""
+def _singulier(mot: str) -> str:
+    """Pluriel simple : « renouvelables » -> « renouvelable », « eoliens » -> « eolien ».
+    Filet de sécurité quand le petit modèle spaCy ne lemmatise pas un adjectif au pluriel."""
+    return mot[:-1] if len(mot) > 3 and mot[-1] in "sx" and not mot.endswith("ss") else mot
+
+
+def _sequences(doc) -> tuple[list[str], list[str], list[str]]:
+    """Trois versions de la phrase : mots, lemmes (spaCy) et mots au singulier, normalisés."""
     mots = [normaliser(t.text) for t in doc]
     lemmes = [normaliser(t.lemma_) for t in doc]
-    return mots, lemmes
+    singuliers = [_singulier(m) for m in mots]
+    return mots, lemmes, singuliers
 
 
 def _mots_du_nom(nom: str) -> list[str]:
@@ -69,8 +76,7 @@ class Reconnaisseur:
     def _ajouter(self, cle: str, expressions: list[str]) -> None:
         motifs = []
         for doc in nlp.pipe(expressions):
-            mots, lemmes = _sequences(doc)
-            motifs += [Doc(nlp.vocab, words=mots), Doc(nlp.vocab, words=lemmes)]
+            motifs += [Doc(nlp.vocab, words=seq) for seq in _sequences(doc)]
         self.matcher.add(cle, motifs)
         if not cle.startswith("CLASSE|"):
             self._cles_dynamiques.add(cle)
@@ -107,9 +113,8 @@ class Reconnaisseur:
         self._dynamiques = (tuple(zones), tuple(individus))
 
     def entites(self, doc) -> list[Span]:
-        mots, lemmes = _sequences(doc)
         spans = []
-        for seq in (mots, lemmes):
+        for seq in _sequences(doc):
             d = Doc(nlp.vocab, words=seq)
             for match_id, start, end in self.matcher(d):
                 spans.append(Span(doc, start, end, label=nlp.vocab.strings[match_id]))
@@ -138,6 +143,8 @@ class Analyse:
     intention: str = "liste"
     relation: dict | None = None
     superlatif: str | None = None
+    agregat: str | None = None
+    regroupement: str | None = None      # "zone" ou "type" (GROUP BY)
     attribut: str | None = None
     sparql: str = ""
     erreur: str | None = None
@@ -185,6 +192,15 @@ def analyser(question: str) -> Analyse:
     # Intention
     if any(normaliser(m) in texte.split() for m in V.MOTS_COMPTAGE):
         a.intention = "comptage"
+    else:
+        # « consommation totale », « puissance moyenne » : on ignore les mots déjà reconnus
+        # comme entité (« moyenne tension » désigne une classe, pas une moyenne)
+        couverts = {i for s in spans for i in range(s.start, s.end)}
+        hors_entites = {normaliser(t.text) for t in doc if t.i not in couverts}
+        if hors_entites & {normaliser(m) for m in V.MOTS_SOMME}:
+            a.agregat = "SUM"
+        elif hors_entites & {normaliser(m) for m in V.MOTS_MOYENNE}:
+            a.agregat = "AVG"
     if not a.filtres:
         if any(re.search(rf"\b{normaliser(m)}\b", texte) for m in V.MOTS_MIN):
             a.superlatif = "ASC"
@@ -193,19 +209,36 @@ def analyser(question: str) -> Analyse:
     for t in doc:
         lem = normaliser(t.lemma_)
         # le petit modèle spaCy se trompe parfois de lemme (« alimente » étiqueté NOM) :
-        # on accepte aussi les formes conjuguées qui commencent par le radical du verbe
+        # on accepte aussi les formes conjuguées qui commencent par le radical du verbe,
+        # sauf les noms dérivés du verbe (« alimentation », « stockage »)
         verbe = lem if lem in V.RELATIONS else next(
             (v for v in V.RELATIONS if normaliser(t.text).startswith(v[:-2])
-             and not normaliser(t.text).startswith(v[:-2] + "ation")), None)
+             and not normaliser(t.text).startswith((v[:-2] + "ation", v[:-2] + "age"))),
+            None)
         if verbe:
             rel = V.RELATIONS[verbe]
             suivant = [normaliser(x.text) for x in doc[t.i + 1:t.i + 3]]
-            passif = "par" in suivant or "Part" in t.morph.get("VerbForm")
+            passif = "par" in suivant or ("Part" in t.morph.get("VerbForm")
+                                          and not rel.get("participe_sans_inversion"))
             # « Qu'alimente la batterie ? » : question sur l'objet, le sujet est après le verbe
-            inversion = normaliser(doc[0].text) in ("que", "qu'", "quoi")
+            # (mais pas « Qu'est-ce QUI alimente l'usine ? » : là, « qui » est le sujet)
+            inversion = (normaliser(doc[0].text) in ("que", "qu'", "quoi")
+                         and normaliser(doc[t.i - 1].text) != "qui")
             a.relation = {**rel, "position": t.i, "passif": passif or inversion, "verbe": t.text}
             a.intention = "relation" if a.intention != "comptage" else "comptage_relation"
             break
+    # Regroupement (GROUP BY) : « par zone », « par type », « répartition des … »
+    for dimension, expressions in V.REGROUPEMENTS.items():
+        if any(re.search(rf"\b{re.escape(normaliser(e))}\b", texte) for e in expressions):
+            a.regroupement = dimension
+            break
+    if not a.regroupement and any(normaliser(m) in texte.split() for m in V.MOTS_REPARTITION):
+        a.regroupement = "type"
+    if a.regroupement and not a.relation:
+        a.intention = "regroupement"
+        a.superlatif = None          # « par zone » prime sur « la plus … »
+    if a.agregat and a.intention == "liste":
+        a.intention = "agregat"
     if a.filtres and a.intention == "liste":
         a.intention = "filtre"
     if a.superlatif and a.intention == "liste":
@@ -272,6 +305,10 @@ def generer(a: Analyse) -> str:
         return (f"SELECT DISTINCT {' '.join('?' + p for p in projection)} WHERE {{\n"
                 f"  {corps}\n}}")
 
+    # --- Regroupement (GROUP BY) : « puissance installée par zone » ---
+    if a.intention == "regroupement":
+        return _regroupement(a, ents)
+
     # --- Liste / filtre / superlatif / comptage ---
     classes = [e["valeur"] for e in ents if e["type"] == "CLASSE" and e["valeur"] != "Zone"]
     attribut = a.attribut
@@ -291,15 +328,21 @@ def generer(a: Analyse) -> str:
             raise ValueError("Je n'ai reconnu aucun élément de l'ontologie dans la question.")
 
     lignes, _ = _contraintes("element", ents)
+    agregat = a.intention == "agregat" and attribut
     if attribut:
         motif = f"?element sg:{attribut} ?{attribut} ."
-        lignes.append(motif if (a.filtres or a.superlatif) else f"OPTIONAL {{ {motif} }}")
+        lignes.append(motif if (a.filtres or a.superlatif or agregat) else f"OPTIONAL {{ {motif} }}")
     for f in a.filtres:
         lignes.append(f"FILTER(?{attribut} {f['op']} {f['valeur']})")
     corps = "\n  ".join(lignes)
 
     if a.intention == "comptage":
         return f"SELECT (COUNT(DISTINCT ?element) AS ?nombre) WHERE {{\n  {corps}\n}}"
+    if agregat:
+        # sous-requête DISTINCT : un élément n'est compté qu'une fois même s'il a plusieurs types
+        nom = "total" if a.agregat == "SUM" else "moyenne"
+        return (f"SELECT ({a.agregat}(?{attribut}) AS ?{nom}) (COUNT(?element) AS ?nombre) WHERE {{\n"
+                f"  {{ SELECT DISTINCT ?element ?{attribut} WHERE {{\n  {corps}\n  }} }}\n}}")
 
     sel = "?element" + (f" ?{attribut}" if attribut else "") + " ?zone"
     requete = (f"SELECT DISTINCT {sel} WHERE {{\n  {corps}\n"
@@ -309,6 +352,56 @@ def generer(a: Analyse) -> str:
     elif attribut:
         requete += f"\nORDER BY DESC(?{attribut})"
     return requete
+
+
+RACINE_DE_L_ATTRIBUT = {"puissanceMW": "SourceProduction", "capaciteStockageMWh": "SystemeStockage",
+                        "consommationKWh": "BatimentConsommateur", "tensionKV": "LigneElectrique"}
+
+
+def _regroupement(a: Analyse, ents: list[dict]) -> str:
+    """GROUP BY par zone ou par type (ajout de la branche Production — Mehdi).
+
+    « Combien de sources par zone ? »            -> COUNT par zone
+    « Quelle est la puissance installée par zone ? » -> SUM(puissanceMW) + COUNT par zone
+    « Puissance moyenne des sources par type ? »  -> AVG(puissanceMW) + COUNT par type
+    Une sous-requête SELECT DISTINCT garantit qu'un élément n'est compté qu'une fois,
+    même s'il a plusieurs types (ex. un bâtiment à la fois industriel et gros consommateur).
+    """
+    classes = [e["valeur"] for e in ents if e["type"] == "CLASSE" and e["valeur"] != "Zone"]
+    if not classes:   # classe déduite de l'attribut, sinon tout le smart grid
+        racine = RACINE_DE_L_ATTRIBUT.get(a.attribut, "ComposantSmartGrid")
+        ents = ents + [{"type": "CLASSE", "valeur": racine}]
+        classes = [racine]
+    lignes, _ = _contraintes("element", ents)
+
+    # on n'agrège un attribut que s'il est demandé (« puissance », « MW », « totale », « moyenne »)
+    attribut = a.attribut or (V.ATTRIBUT_PAR_BRANCHE.get(V.BRANCHE.get(classes[0], ""))
+                              if a.agregat else None)
+    if attribut:
+        lignes.append(f"?element sg:{attribut} ?{attribut} .")
+    for f in a.filtres:
+        lignes.append(f"FILTER(?{attribut} {f['op']} {f['valeur']})")
+
+    if a.regroupement == "zone":
+        groupe = "zone"
+        lignes.append("?element sg:estSitueDans ?zone .")
+    else:
+        groupe = "type"
+        feuilles = " ".join("sg:" + t for t in V.TYPES_FEUILLES)
+        lignes.append(f"?element a ?type .\n  VALUES ?type {{ {feuilles} }}")
+
+    interne = " ".join(["?element", f"?{groupe}"] + ([f"?{attribut}"] if attribut else []))
+    corps = "\n    ".join(lignes)
+    mesures = "(COUNT(?element) AS ?nombre)"
+    tri = "DESC(?nombre)"
+    if attribut:
+        fonction = "AVG" if a.agregat == "AVG" else "SUM"
+        nom = "moyenne" if fonction == "AVG" else "total"
+        mesures = f"({fonction}(?{attribut}) AS ?{nom}) " + mesures
+        tri = f"DESC(?{nom})"
+    return (f"SELECT ?{groupe} {mesures} WHERE {{\n"
+            f"  {{ SELECT DISTINCT {interne} WHERE {{\n    {corps}\n  }} }}\n"
+            f"}}\nGROUP BY ?{groupe}\nORDER BY {tri}")
 
 
 def traduire(question: str, zones: list[str], individus: list[str]) -> Analyse:

@@ -8,7 +8,7 @@ router = APIRouter(prefix="/api/production", tags=["Production"])
 
 
 class SourceIn(BaseModel):
-    nom: str = Field(..., examples=["Centrale_Solaire_Gafsa"])
+    nom: str = Field(..., examples=["Centrale_Solaire_Sfax"])
     type: str = Field(..., examples=["CentraleSolaire"])
     puissance: float = Field(..., gt=0, examples=[100.0])
     zone: str = Field(..., examples=["Zone_Tozeur"])
