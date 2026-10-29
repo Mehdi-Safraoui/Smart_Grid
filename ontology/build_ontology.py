@@ -125,12 +125,21 @@ with onto:
     res = BatimentResidentiel("Residence_ElMenzah", consommationKWh=12000.0, estSitueDans=tunis)
     com = BatimentCommercial("Centre_Commercial_Tunis", consommationKWh=250000.0, estSitueDans=tunis)
     usine = BatimentIndustriel("Usine_Sfax", consommationKWh=900000.0, estSitueDans=sfax)
+    # Un individu par cas des deux classes définies (gros consommateur ? alimenté en renouvelable ?)
+    hotel = BatimentCommercial("Hotel_Nabeul", consommationKWh=180000.0,   # gros + renouvelable
+                               estSitueDans=nabeul)
+    textile = BatimentIndustriel("Usine_Textile_Nabeul", consommationKWh=150000.0,   # gros seulement
+                                 estSitueDans=nabeul)
+    resTozeur = BatimentResidentiel("Residence_Tozeur", consommationKWh=30000.0,   # renouvelable seulement
+                                    estSitueDans=tozeur)
+    ennasr = BatimentResidentiel("Cite_Ennasr_Tunis", consommationKWh=45000.0,   # aucun des deux
+                                 estSitueDans=tunis)
 
-    solaire.alimente = [usine]
-    batt.alimente = [usine]
-    eolien.alimente = [com]
-    h2.alimente = [com]
-    rades.alimente = [res]
+    solaire.alimente = [usine, resTozeur]
+    batt.alimente = [usine, resTozeur]
+    eolien.alimente = [com, hotel]
+    h2.alimente = [com, textile]   # un stockage n'est pas une SourceRenouvelable
+    rades.alimente = [res, ennasr]
 
     # Stockage (Mohamed Elyess) — individus supplémentaires
     # Nouvelles zones utilisées par la branche stockage (owlready2 réutilise la zone

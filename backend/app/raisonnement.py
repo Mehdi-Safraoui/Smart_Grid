@@ -59,7 +59,7 @@ def _hermit(g: Graph) -> Graph:
         src, out = Path(tmp) / "entree.owl", Path(tmp) / "sortie.owl"
         g.serialize(src, format="xml")
         world = World()
-        onto = world.get_ontology(src.as_uri()).load()
+        onto = world.get_ontology(f"file://{src.as_posix()}").load()   # as_uri() casse le chemin sous Windows
         with onto:
             sync_reasoner_hermit(world, infer_property_values=True, debug=0)
         onto.save(file=str(out), format="rdfxml")

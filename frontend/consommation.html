@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SmartGrid — Bâtiments consommateurs</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    .badge.gros { background: #fff3cd; color: #9a6b00; }
+    .badge.vert { background: var(--green-light); color: var(--green); }
+    .badge.type { background: #e8edf2; color: var(--navy); }
+    .titre-carte { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+    .titre-carte h2 { margin: 0; }
+    .carte-grille { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; }
+    #carte { height: 460px; border-radius: 8px; border: 1px solid var(--border); z-index: 0; }
+    .legende { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-top: 8px; }
+    .legende i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+    .popup h4 { margin: 0 0 6px; color: var(--navy); }
+    .popup ul { margin: 2px 0 6px; padding-left: 18px; }
+    .popup small { color: var(--muted); }
+    select[multiple] { min-height: 110px; }
+    .aide { font-size: 12px; color: var(--muted); }
+    @media (max-width: 900px) { .carte-grille { grid-template-columns: 1fr; } #carte { height: 360px; } }
+  </style>
 </head>
 <body>
   <header>
@@ -23,23 +41,92 @@
     <h1>Bâtiments consommateurs</h1>
     <p class="subtitle">Résidentiels, commerciaux et industriels — branche gérée par Ahmed Amine</p>
 
-    <div class="todo">
-      <b>À compléter par Ahmed Amine.</b> La liste fonctionne déjà. Il reste à ajouter, en suivant
-      <code>production.html</code> et <code>js/production.js</code> : les filtres (type, zone, valeur min/max,
-      recherche), le formulaire d'ajout / modification et le bouton de suppression.
-      Retirez cet encadré une fois terminé.
-    </div>
+    <!-- Indicateurs (agrégats SPARQL) -->
+    <div class="stats" id="kpis"></div>
 
-    <!-- TODO : formulaire de filtres (voir production.html) -->
-
+    <!-- Filtres et recherche (READ + FILTER) -->
     <section class="card">
-      <h2>Liste</h2>
+      <form class="toolbar" id="filtres">
+        <label class="field">Recherche<input name="recherche" placeholder="nom…"></label>
+        <label class="field">Type<select name="type">
+          <option value="">Tous</option>
+          <option value="BatimentResidentiel">Résidentiels</option>
+          <option value="BatimentCommercial">Commerciaux / tertiaires</option>
+          <option value="BatimentIndustriel">Industriels</option>
+        </select></label>
+        <label class="field">Zone<select name="zone" id="filtre-zone"></select></label>
+        <label class="field">Alimenté par<select name="alimente_par" id="filtre-fournisseur"></select></label>
+        <label class="field">Conso. min (kWh)<input name="min_kwh" type="number" min="0" step="any"></label>
+        <label class="field">Conso. max (kWh)<input name="max_kwh" type="number" min="0" step="any"></label>
+        <label class="field">Gros consommateur<select name="gros">
+          <option value="">Indifférent</option>
+          <option value="true">Oui (≥ 100 000 kWh)</option>
+          <option value="false">Non</option>
+        </select></label>
+        <label class="field">Renouvelable<select name="renouvelable">
+          <option value="">Indifférent</option>
+          <option value="true">Alimenté en renouvelable</option>
+          <option value="false">Non</option>
+        </select></label>
+        <button type="submit">Filtrer</button>
+        <button type="reset" class="secondary">Effacer</button>
+      </form>
+    </section>
+
+    <!-- Liste -->
+    <section class="card">
+      <div class="titre-carte">
+        <h2>Liste</h2>
+        <button type="button" class="small secondary" id="btn-classer"
+                title="Applique les définitions OWL de GrosConsommateur et BatimentAlimenteRenouvelable avec des requêtes SPARQL INSERT … WHERE">
+          Reclasser (règles SPARQL)</button>
+      </div>
       <div id="liste"></div>
     </section>
 
-    <!-- TODO : formulaire d'ajout / modification (voir production.html) -->
+    <!-- Ajout / modification (CREATE + UPDATE) -->
+    <section class="card">
+      <h2 id="form-titre">Ajouter un bâtiment</h2>
+      <form id="form-batiment">
+        <div class="form-grid">
+          <label class="field">Nom (identifiant)<input name="nom" required pattern="[A-Za-z][A-Za-z0-9_]*" placeholder="Hopital_Sfax"></label>
+          <label class="field">Type<select name="type" required>
+            <option value="BatimentResidentiel">Résidentiel</option>
+            <option value="BatimentCommercial">Commercial / tertiaire</option>
+            <option value="BatimentIndustriel">Industriel</option>
+          </select></label>
+          <label class="field">Consommation (kWh)<input name="consommation" type="number" min="0.001" step="any" required></label>
+          <label class="field">Zone<select name="zone" id="form-zone" required></select></label>
+          <label class="field">Alimenté par (une ou plusieurs)
+            <select name="alimente_par" id="form-fournisseur" multiple required></select>
+            <span class="aide">Ctrl + clic pour en choisir plusieurs</span></label>
+        </div>
+        <p class="toolbar" style="margin-top:14px">
+          <button type="submit" id="btn-enregistrer">Ajouter</button>
+          <button type="button" class="secondary" id="btn-annuler" hidden>Annuler</button>
+        </p>
+      </form>
+    </section>
+
+    <!-- Valeur ajoutée : carte de la Tunisie + bilan par zone -->
+    <section class="card">
+      <h2>Carte du smart grid et bilan par zone</h2>
+      <div class="carte-grille">
+        <div>
+          <div id="carte"></div>
+          <div class="legende">
+            <span><i style="background:#1e9e6a"></i>≥ 50 % des bâtiments en renouvelable</span>
+            <span><i style="background:#f2a900"></i>moins de 50 %</span>
+            <span><i style="background:#8a99a8"></i>aucun bâtiment</span>
+            <span>taille du cercle = consommation de la zone</span>
+          </div>
+        </div>
+        <div id="bilan"></div>
+      </div>
+    </section>
   </main>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/api.js"></script>
   <script src="js/consommation.js"></script>
 </body>
