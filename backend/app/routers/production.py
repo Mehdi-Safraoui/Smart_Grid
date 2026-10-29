@@ -18,6 +18,8 @@ class SourceIn(BaseModel):
 class SourceUpdate(BaseModel):
     puissance: float | None = Field(None, gt=0)
     zone: str | None = None
+    type: str | None = None
+    nouveau_nom: str | None = None
 
 
 @router.get("")
@@ -52,8 +54,8 @@ def creer(source: SourceIn):
 
 @router.put("/{nom}")
 def modifier(nom: str, maj: SourceUpdate):
-    q.modifier(nom, maj.puissance, maj.zone)
-    return {"message": f"{nom} modifiée"}
+    nouveau = q.modifier(nom, maj.puissance, maj.zone, maj.type, maj.nouveau_nom)
+    return {"message": f"{nouveau} modifiée", "nom": nouveau}
 
 
 @router.delete("/{nom}")

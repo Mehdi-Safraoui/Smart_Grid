@@ -19,7 +19,7 @@ from collections import deque
 from fastapi import HTTPException
 
 from ..sparql_client import client
-from .common import decimal, exists, safe_id, search_filter
+from .common import changer_type, decimal, exists, renommer, safe_id, search_filter
 
 TYPES = ['LigneTransport', 'LigneDistribution', 'PosteTransformation']   # classes instanciables
 LIGNES = ['LigneTransport', 'LigneDistribution']
@@ -110,9 +110,17 @@ def creer(nom: str, type_: str, zone: str, tension: float | None = None,
 
 # ------------------------------------------------------------------ UPDATE
 def modifier(nom: str, tension: float | None = None, zone: str | None = None,
-             relie: list[str] | None = None) -> None:
+             relie: list[str] | None = None, type_: str | None = None,
+             nouveau_nom: str | None = None) -> str:
     nom = safe_id(nom)
     element = obtenir(nom)
+    if nouveau_nom:
+        safe_id(nouveau_nom)
+    if type_ and type_ != element["type"]:
+        # transport <-> distribution seulement : un poste n'a ni tension ni relie
+        if element["type"] not in LIGNES or type_ not in LIGNES:
+            raise HTTPException(400, "Le type ne peut changer qu'entre ligne de transport et de distribution")
+        changer_type(nom, type_, LIGNES)
     if (tension is not None or relie is not None) and element["type"] not in LIGNES:
         raise HTTPException(400, "Un poste de transformation n'a ni tension ni relation relie")
     if relie is not None:
@@ -134,6 +142,7 @@ def modifier(nom: str, tension: float | None = None, zone: str | None = None,
         DELETE {{ sg:{nom} sg:relie ?ancien }}
         INSERT {{ {nouveaux} }}
         WHERE  {{ OPTIONAL {{ sg:{nom} sg:relie ?ancien }} }}""")
+    return renommer(nom, nouveau_nom) if nouveau_nom else nom   # en dernier
 
 
 # ------------------------------------------------------------------ DELETE

@@ -155,9 +155,9 @@ with onto:
 
     # Stockage (Mohamed Elyess) — individus supplémentaires
     # (zones Kairouan et Gabès déclarées avec les autres, en haut de la section)
-    # Batterie lithium-ion qui lisse la production du parc éolien de Sidi Daoud
+    # Batterie lithium-ion qui lisse la production de la centrale solaire de Kairouan (même zone)
     batt_kairouan = Batterie("Batterie_Kairouan", capaciteStockageMWh=30.0,
-                             stockeEnergieDe=[eolien], estSitueDans=kairouan)
+                             stockeEnergieDe=[solaireKairouan], estSitueDans=kairouan)
     # Batterie de secours de la centrale de Radès (réserve pour le quartier El Menzah)
     batt_tunis = Batterie("Batterie_Tunis", capaciteStockageMWh=15.0,
                           stockeEnergieDe=[rades], estSitueDans=tunis)

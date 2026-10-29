@@ -62,11 +62,12 @@ form.addEventListener("submit", async (ev) => {
   const d = Object.fromEntries(new FormData(form));
   try {
     if (enEdition) {
-      await api(`/api/stockage/${enEdition}`, {
+      const r = await api(`/api/stockage/${enEdition}`, {
         method: "PUT",
-        body: { capacite: Number(d.capacite), zone: d.zone, stocke: sourcesChoisies() },
+        body: { capacite: Number(d.capacite), zone: d.zone, stocke: sourcesChoisies(),
+                type: d.type, nouveau_nom: d.nom !== enEdition ? d.nom : null },
       });
-      toast(`${enEdition} modifié`);
+      toast(`${r.nom} modifié`);
     } else {
       await api("/api/stockage", {
         method: "POST",
@@ -86,7 +87,7 @@ async function editer(nom) {
   const s = await api(`/api/stockage/${nom}`);
   enEdition = nom;
   form.nom.value = nom;
-  form.nom.disabled = form.type.disabled = form.alimente.disabled = true;
+  form.alimente.disabled = true;   // nom et type sont modifiables
   form.type.value = s.type;
   form.capacite.value = s.capacite;
   form.zone.value = s.zone;

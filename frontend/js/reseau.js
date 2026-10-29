@@ -46,10 +46,10 @@ form.addEventListener("submit", async (ev) => {
   const relie = [d.relie1, d.relie2, d.relie3].filter(Boolean);
   try {
     if (enEdition) {
-      const body = { zone: d.zone };
-      if (ligne) Object.assign(body, { tension: Number(d.tension), relie });
-      await api(`/api/reseau/${enEdition}`, { method: "PUT", body });
-      toast(`${enEdition} modifié`);
+      const body = { zone: d.zone, nouveau_nom: d.nom !== enEdition ? d.nom : null };
+      if (ligne) Object.assign(body, { tension: Number(d.tension), relie, type: d.type });
+      const r = await api(`/api/reseau/${enEdition}`, { method: "PUT", body });
+      toast(`${r.nom} modifié`);
     } else {
       const body = { nom: d.nom, type: d.type, zone: d.zone };
       if (ligne) Object.assign(body, { tension: Number(d.tension), relie });
@@ -68,7 +68,7 @@ async function editer(nom) {
   const e = await api(`/api/reseau/${nom}`);
   enEdition = nom;
   form.nom.value = nom;
-  form.nom.disabled = form.type.disabled = true;
+  form.type.disabled = !e.type.startsWith("Ligne");   // un poste ne change pas de type
   form.type.value = e.type;
   majChampsLigne();
   form.zone.value = e.zone;

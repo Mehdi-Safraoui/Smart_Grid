@@ -19,6 +19,8 @@ class ElementUpdate(BaseModel):
     tension: float | None = Field(None, gt=0)
     zone: str | None = None
     relie: list[str] | None = None
+    type: str | None = None
+    nouveau_nom: str | None = None
 
 
 @router.get("")
@@ -54,8 +56,8 @@ def creer(element: ElementIn):
 
 @router.put("/{nom}")
 def modifier(nom: str, maj: ElementUpdate):
-    q.modifier(nom, maj.tension, maj.zone, maj.relie)
-    return {"message": f"{nom} modifié"}
+    nouveau = q.modifier(nom, maj.tension, maj.zone, maj.relie, maj.type, maj.nouveau_nom)
+    return {"message": f"{nouveau} modifié", "nom": nouveau}
 
 
 @router.delete("/{nom}")

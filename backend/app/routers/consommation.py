@@ -19,6 +19,8 @@ class BatimentUpdate(BaseModel):
     consommation: float | None = Field(None, gt=0)
     zone: str | None = None
     alimente_par: list[str] | None = None
+    type: str | None = None
+    nouveau_nom: str | None = None
 
 
 @router.get("")
@@ -82,8 +84,8 @@ def creer(b: BatimentIn):
 
 @router.put("/{nom}")
 def modifier(nom: str, maj: BatimentUpdate):
-    q.modifier(nom, maj.consommation, maj.zone, maj.alimente_par)
-    return {"message": f"{nom} modifié"}
+    nouveau = q.modifier(nom, maj.consommation, maj.zone, maj.alimente_par, maj.type, maj.nouveau_nom)
+    return {"message": f"{nouveau} modifié", "nom": nouveau}
 
 
 @router.delete("/{nom}")

@@ -8,7 +8,7 @@ Fiche de préparation pour la soutenance : ce qui a été fait, et comment l'exp
 |---|---|---|---|---|---|
 | Batterie_Tozeur *(base)* | Batterie | 20 MWh | Tozeur | Centrale_Solaire_Tozeur | Usine_Sfax |
 | Stockage_H2_SidiDaoud *(base)* | StockageHydrogene | 50 MWh | Nabeul | Parc_Eolien_SidiDaoud | Centre_Commercial_Tunis |
-| **Batterie_Kairouan** | Batterie | 30 MWh | Kairouan | Parc_Eolien_SidiDaoud | Centre_Commercial_Tunis |
+| **Batterie_Kairouan** | Batterie | 30 MWh | Kairouan | Centrale_Solaire_Kairouan | Centre_Commercial_Tunis |
 | **Batterie_Tunis** | Batterie | 15 MWh | Tunis | Centrale_Gaz_Rades | Residence_ElMenzah |
 | **Stockage_H2_Gabes** | StockageHydrogene | 120 MWh | Gabès | Centrale_Solaire_Tozeur | Centre_Commercial_Tunis |
 

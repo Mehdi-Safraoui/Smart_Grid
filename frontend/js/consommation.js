@@ -58,11 +58,12 @@ form.addEventListener("submit", async (ev) => {
   const d = Object.fromEntries(new FormData(form));
   try {
     if (enEdition) {
-      await api(`/api/consommation/${enEdition}`, {
+      const r = await api(`/api/consommation/${enEdition}`, {
         method: "PUT",
-        body: { consommation: Number(d.consommation), zone: d.zone, alimente_par: fournisseursChoisis() },
+        body: { consommation: Number(d.consommation), zone: d.zone, alimente_par: fournisseursChoisis(),
+                type: d.type, nouveau_nom: d.nom !== enEdition ? d.nom : null },
       });
-      toast(`${enEdition} modifié`);
+      toast(`${r.nom} modifié`);
     } else {
       await api("/api/consommation", {
         method: "POST",
@@ -83,8 +84,7 @@ async function editer(nom) {
   const actuels = (b.alimentePar || "").split(", ");
   enEdition = nom;
   form.nom.value = nom;
-  form.nom.disabled = form.type.disabled = true;
-  form.type.value = b.type;
+  form.type.value = b.type;   // nom et type sont modifiables
   form.consommation.value = b.consommation;
   form.zone.value = b.zone;
   [...form.alimente_par.options].forEach((o) => (o.selected = actuels.includes(o.value)));

@@ -289,7 +289,7 @@ def test_nlp_stockage_relation_et_comptage():
     r = ask("Qu'est-ce qui est stocké par le stockage hydrogène ?")
     assert {x["objet"] for x in r["resultats"]} == {"Centrale_Solaire_Tozeur", "Parc_Eolien_SidiDaoud"}
     assert {x["objet"] for x in ask("Qu'est-ce qui est stocké par la batterie de Kairouan ?")["resultats"]} \
-        == {"Parc_Eolien_SidiDaoud"}
+        == {"Centrale_Solaire_Kairouan"}
 
 
 # ----------------------------------------------------------------- Valeur ajoutée : HermiT
@@ -407,3 +407,45 @@ def test_nlp_consommation_agregats():
         == [{"moyenne": 525000, "nombre": 2}]
     # « moyenne tension » est une classe (ligne de distribution), pas une moyenne
     assert ask("Quelles sont les lignes de moyenne tension ?")["analyse"]["intention"] == "liste"
+
+
+# ----------------------------------------------------------------- Modifier le nom et le type
+def test_modifier_nom_et_type_stockage():
+    # changement de type : Batterie -> StockageHydrogene (un seul type reste)
+    assert c.put("/api/stockage/Batterie_Tozeur", json={"type": "StockageHydrogene"}).status_code == 200
+    assert c.get("/api/stockage/Batterie_Tozeur").json()["type"] == "StockageHydrogene"
+    assert c.put("/api/stockage/Batterie_Tozeur", json={"type": "Volant"}).status_code == 400
+    # renommage : tous les liens suivent (comme sujet et comme objet)
+    r = c.put("/api/stockage/Batterie_Tozeur", json={"nouveau_nom": "Stockage_Tozeur"})
+    assert r.status_code == 200 and r.json()["nom"] == "Stockage_Tozeur"
+    assert c.get("/api/stockage/Batterie_Tozeur").status_code == 404
+    s = c.get("/api/stockage/Stockage_Tozeur").json()
+    assert (s["capacite"], s["stocke"], set(s["alimente"].split(", "))) == \
+        (20, "Centrale_Solaire_Tozeur", {"Usine_Sfax", "Residence_Tozeur"})
+    assert "Stockage_Tozeur" in {x["valeur"] for x in c.get("/api/individu/Usine_Sfax").json()}
+    assert "Batterie_Tozeur" not in {x["valeur"] for x in c.get("/api/individu/Usine_Sfax").json()}
+    # nom déjà pris / invalide
+    assert c.put("/api/stockage/Stockage_Tozeur", json={"nouveau_nom": "Batterie_Tunis"}).status_code == 409
+    assert c.put("/api/stockage/Stockage_Tozeur", json={"nouveau_nom": "x} ; DROP ALL ; {"}).status_code == 400
+    # remplacement des bâtiments alimentés
+    assert c.put("/api/stockage/Stockage_Tozeur", json={"alimente": ["Hotel_Nabeul"]}).status_code == 200
+    assert c.get("/api/stockage/Stockage_Tozeur").json()["alimente"] == "Hotel_Nabeul"
+
+
+def test_modifier_nom_et_type_autres_branches():
+    assert c.put("/api/production/Parc_Eolien_SidiDaoud",
+                 json={"type": "CentraleSolaire", "nouveau_nom": "Centrale_Solaire_Nabeul"}).status_code == 200
+    p = c.get("/api/production/Centrale_Solaire_Nabeul").json()
+    assert p["type"] == "CentraleSolaire" and "Centre_Commercial_Tunis" in p["alimente"]
+    assert "Centrale_Solaire_Nabeul" in c.get("/api/stockage/Stockage_H2_SidiDaoud").json()["stocke"]
+    # consommation : le classement des classes définies est recalculé
+    assert c.put("/api/consommation/Usine_Sfax",
+                 json={"type": "BatimentCommercial", "nouveau_nom": "Centre_Sfax"}).status_code == 200
+    b = c.get("/api/consommation/Centre_Sfax").json()
+    assert b["type"] == "BatimentCommercial" and b["gros"] == 1
+    # réseau : transport <-> distribution, mais pas poste <-> ligne
+    assert c.put("/api/reseau/Ligne_Kairouan_Sousse", json={"type": "LigneDistribution"}).status_code == 200
+    assert c.get("/api/reseau/Ligne_Kairouan_Sousse").json()["type"] == "LigneDistribution"
+    assert c.put("/api/reseau/Poste_Sfax", json={"type": "LigneTransport"}).status_code == 400
+    assert c.put("/api/reseau/Poste_Sfax", json={"nouveau_nom": "Poste_Sfax_Nord"}).status_code == 200
+    assert "Poste_Sfax_Nord" in c.get("/api/reseau/Ligne_Sfax_Sousse").json()["relie"]

@@ -34,6 +34,36 @@ def exists(individual: str) -> bool:
     return bool(rows) and int(rows[0].get("n", 0)) > 0
 
 
+def changer_type(nom: str, type_: str, autorises: list[str]) -> None:
+    """Change la classe d'un individu (DELETE / INSERT WHERE).
+    On ne retire que les classes « instanciables » de la branche : owl:NamedIndividual et les
+    classes déduites (GrosConsommateur…) restent intactes."""
+    if type_ not in autorises:
+        raise HTTPException(400, f"Type invalide : {type_} (attendu : {autorises})")
+    anciens = ", ".join(f"sg:{t}" for t in autorises)
+    client.update(f"""
+    DELETE {{ sg:{nom} a ?ancien }}
+    INSERT {{ sg:{nom} a sg:{type_} }}
+    WHERE  {{ sg:{nom} a ?ancien . FILTER(?ancien IN ({anciens})) }}""")
+
+
+def renommer(ancien: str, nouveau: str) -> str:
+    """Renomme un individu : l'identifiant est son IRI, donc on réécrit tous ses triplets,
+    d'abord comme sujet puis comme objet (une seule opération par appel)."""
+    nouveau = safe_id(nouveau)
+    if nouveau == ancien:
+        return ancien
+    if exists(nouveau):
+        raise HTTPException(409, f"'{nouveau}' existe déjà")
+    client.update(f"""
+    DELETE {{ sg:{ancien} ?p ?o }} INSERT {{ sg:{nouveau} ?p ?o }}
+    WHERE  {{ sg:{ancien} ?p ?o }}""")
+    client.update(f"""
+    DELETE {{ ?s ?p sg:{ancien} }} INSERT {{ ?s ?p sg:{nouveau} }}
+    WHERE  {{ ?s ?p sg:{ancien} }}""")
+    return nouveau
+
+
 # ---------------------------------------------------------------- zones
 def list_zones() -> list[str]:
     q = "SELECT ?zone WHERE { ?zone a sg:Zone } ORDER BY ?zone"

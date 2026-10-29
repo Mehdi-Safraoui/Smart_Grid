@@ -15,7 +15,7 @@ On y trouve les 4 opérations CRUD + filtrage + recherche :
 from fastapi import HTTPException
 
 from ..sparql_client import client
-from .common import decimal, exists, safe_id, search_filter
+from .common import changer_type, decimal, exists, renommer, safe_id, search_filter
 
 TYPES = ["CentraleSolaire", "ParcEolien", "SourceFossile"]   # classes instanciables
 
@@ -135,10 +135,15 @@ def creer(nom: str, type_: str, puissance: float, zone: str,
 
 
 # ------------------------------------------------------------------ UPDATE
-def modifier(nom: str, puissance: float | None = None, zone: str | None = None) -> None:
+def modifier(nom: str, puissance: float | None = None, zone: str | None = None,
+             type_: str | None = None, nouveau_nom: str | None = None) -> str:
     nom = safe_id(nom)
     if not exists(nom):
         raise HTTPException(404, f"Source introuvable : {nom}")
+    if nouveau_nom:
+        safe_id(nouveau_nom)
+    if type_:
+        changer_type(nom, type_, TYPES)
     if puissance is not None:
         client.update(f"""
         DELETE {{ sg:{nom} sg:puissanceMW ?ancienne }}
@@ -150,6 +155,7 @@ def modifier(nom: str, puissance: float | None = None, zone: str | None = None) 
         DELETE {{ sg:{nom} sg:estSitueDans ?ancienne }}
         INSERT {{ sg:{nom} sg:estSitueDans sg:{zone} }}
         WHERE  {{ OPTIONAL {{ sg:{nom} sg:estSitueDans ?ancienne }} }}""")
+    return renommer(nom, nouveau_nom) if nouveau_nom else nom   # en dernier : les autres MAJ utilisent l'ancien nom
 
 
 # ------------------------------------------------------------------ DELETE

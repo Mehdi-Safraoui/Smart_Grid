@@ -305,8 +305,8 @@
 <owl:NamedIndividual rdf:about="#Parc_Eolien_SidiDaoud">
   <rdf:type rdf:resource="#ParcEolien"/>
   <estSitueDans rdf:resource="#Zone_Nabeul"/>
-  <alimente rdf:resource="#Hotel_Nabeul"/>
   <alimente rdf:resource="#Centre_Commercial_Tunis"/>
+  <alimente rdf:resource="#Hotel_Nabeul"/>
   <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">54.0</puissanceMW>
 </owl:NamedIndividual>
 
@@ -401,7 +401,7 @@
 
 <owl:NamedIndividual rdf:about="#Batterie_Kairouan">
   <rdf:type rdf:resource="#Batterie"/>
-  <stockeEnergieDe rdf:resource="#Parc_Eolien_SidiDaoud"/>
+  <stockeEnergieDe rdf:resource="#Centrale_Solaire_Kairouan"/>
   <estSitueDans rdf:resource="#Zone_Kairouan"/>
   <alimente rdf:resource="#Centre_Commercial_Tunis"/>
   <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30.0</capaciteStockageMWh>

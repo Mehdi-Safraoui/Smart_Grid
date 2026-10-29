@@ -34,10 +34,12 @@ form.addEventListener("submit", async (ev) => {
   const d = Object.fromEntries(new FormData(form));
   try {
     if (enEdition) {
-      await api(`/api/production/${enEdition}`, {
-        method: "PUT", body: { puissance: Number(d.puissance), zone: d.zone },
+      const r = await api(`/api/production/${enEdition}`, {
+        method: "PUT",
+        body: { puissance: Number(d.puissance), zone: d.zone, type: d.type,
+                nouveau_nom: d.nom !== enEdition ? d.nom : null },
       });
-      toast(`${enEdition} modifiée`);
+      toast(`${r.nom} modifiée`);
     } else {
       await api("/api/production", {
         method: "POST",
@@ -57,7 +59,7 @@ async function editer(nom) {
   const s = await api(`/api/production/${nom}`);
   enEdition = nom;
   form.nom.value = nom;
-  form.nom.disabled = form.type.disabled = form.alimente.disabled = true;
+  form.alimente.disabled = true;   // nom et type sont modifiables
   form.type.value = s.type;
   form.puissance.value = s.puissance;
   form.zone.value = s.zone;

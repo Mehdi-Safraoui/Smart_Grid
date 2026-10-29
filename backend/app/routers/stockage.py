@@ -21,6 +21,9 @@ class StockageUpdate(BaseModel):
     capacite: float | None = Field(None, gt=0)
     zone: str | None = None
     stocke: list[str] | None = None
+    alimente: list[str] | None = None
+    type: str | None = None
+    nouveau_nom: str | None = None
 
 
 @router.get("")
@@ -64,8 +67,8 @@ def creer(s: StockageIn):
 
 @router.put("/{nom}")
 def modifier(nom: str, maj: StockageUpdate):
-    q.modifier(nom, maj.capacite, maj.zone, maj.stocke)
-    return {"message": f"{nom} modifié"}
+    nouveau = q.modifier(nom, maj.capacite, maj.zone, maj.stocke, maj.alimente, maj.type, maj.nouveau_nom)
+    return {"message": f"{nouveau} modifié", "nom": nouveau}
 
 
 @router.delete("/{nom}")

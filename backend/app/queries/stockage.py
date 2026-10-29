@@ -16,7 +16,7 @@ Les 4 opérations CRUD + filtrage + recherche (même structure que production.py
 from fastapi import HTTPException
 
 from ..sparql_client import client
-from .common import decimal, exists, safe_id, search_filter
+from .common import changer_type, decimal, exists, renommer, safe_id, search_filter
 
 TYPES = ["Batterie", "StockageHydrogene"]   # classes instanciables
 
@@ -102,10 +102,15 @@ def creer(nom: str, type_: str, capacite: float, zone: str,
 
 # ------------------------------------------------------------------ UPDATE
 def modifier(nom: str, capacite: float | None = None, zone: str | None = None,
-             stocke: list[str] | None = None) -> None:
+             stocke: list[str] | None = None, alimente: list[str] | None = None,
+             type_: str | None = None, nouveau_nom: str | None = None) -> str:
     nom = safe_id(nom)
     if not exists(nom):
         raise HTTPException(404, f"Stockage introuvable : {nom}")
+    if nouveau_nom:
+        safe_id(nouveau_nom)
+    if type_:
+        changer_type(nom, type_, TYPES)
     if capacite is not None:
         client.update(f"""
         DELETE {{ sg:{nom} sg:capaciteStockageMWh ?ancienne }}
@@ -123,6 +128,14 @@ def modifier(nom: str, capacite: float | None = None, zone: str | None = None,
         DELETE {{ sg:{nom} sg:stockeEnergieDe ?ancienne }}
         INSERT {{ {sources} }}
         WHERE  {{ OPTIONAL {{ sg:{nom} sg:stockeEnergieDe ?ancienne }} }}""")
+    if alimente is not None:   # remplace les bâtiments alimentés (dans les deux sens)
+        batiments = [safe_id(b) for b in alimente]
+        client.update(f"DELETE WHERE {{ sg:{nom} sg:alimente ?b }}")
+        client.update(f"DELETE WHERE {{ ?b sg:estAlimentePar sg:{nom} }}")
+        if batiments:
+            client.update("INSERT DATA {\n" + "\n".join(
+                f"sg:{nom} sg:alimente sg:{b} . sg:{b} sg:estAlimentePar sg:{nom} ." for b in batiments) + "\n}")
+    return renommer(nom, nouveau_nom) if nouveau_nom else nom   # en dernier
 
 
 # ------------------------------------------------------------------ DELETE
