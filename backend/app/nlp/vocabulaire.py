@@ -28,15 +28,24 @@ CLASSES = {
     # TODO Elyess : ajouter des synonymes (accumulateur, ...)
 
     # --- Branche CONSOMMATION (Ahmed Amine) ---
-    "BatimentConsommateur": ["bâtiment", "consommateur", "bâtiment consommateur", "client"],
+    "BatimentConsommateur": ["bâtiment", "consommateur", "bâtiment consommateur", "client",
+                             "édifice", "établissement", "site consommateur"],
     "BatimentResidentiel": ["résidence", "bâtiment résidentiel", "résidentiel", "logement",
-                            "maison", "habitation"],
-    "BatimentCommercial": ["centre commercial", "bâtiment commercial", "commercial", "magasin",
-                           "commerce"],
-    "BatimentIndustriel": ["usine", "bâtiment industriel", "industriel", "industrie"],
-    "GrosConsommateur": ["gros consommateur", "grand consommateur"],
-    "BatimentAlimenteRenouvelable": ["bâtiment vert", "alimenté en renouvelable"],
-    # TODO Ahmed : ajouter des synonymes (immeuble, appartement, ...)
+                            "maison", "habitation", "immeuble", "appartement", "villa", "cité",
+                            "foyer", "quartier résidentiel"],
+    # le tertiaire (hôtel, hôpital, école, bureaux) est rangé dans BatimentCommercial.
+    # Pas de « centre commercial » ici : « centre » devient l'alias de Centre_Commercial_Tunis,
+    # sinon « le centre commercial » désignerait tous les bâtiments commerciaux (hôtel compris)
+    "BatimentCommercial": ["bâtiment commercial", "commercial", "magasin",
+                           "commerce", "supermarché", "hôtel", "hôpital", "clinique", "école",
+                           "bureau", "tertiaire", "bâtiment tertiaire"],
+    "BatimentIndustriel": ["usine", "bâtiment industriel", "industriel", "industrie", "fabrique",
+                           "atelier", "cimenterie", "site industriel"],
+    "GrosConsommateur": ["gros consommateur", "grand consommateur", "bâtiment énergivore",
+                         "gros client"],
+    "BatimentAlimenteRenouvelable": ["bâtiment vert", "alimenté en renouvelable",
+                                     "alimenté par du renouvelable", "bâtiment écologique",
+                                     "bâtiment alimenté en énergie verte", "bâtiment propre"],
 
     # --- Branche RÉSEAU (Yassine) ---
     "InfrastructureReseau": ["infrastructure", "infrastructure du réseau", "équipement du réseau",
@@ -99,6 +108,12 @@ RELATIONS = {
                   "objet": "BatimentConsommateur"},
     "fournir": {"propriete": "alimente", "sujet": "SourceProduction",
                 "objet": "BatimentConsommateur"},
+    # Ahmed Amine : « Quels bâtiments dépendent de la centrale de Radès ? »
+    # -> relation inverse estAlimentePar (le bâtiment est le sujet du verbe)
+    "approvisionner": {"propriete": "alimente", "sujet": "SourceProduction",
+                       "objet": "BatimentConsommateur"},
+    "dependre": {"propriete": "estAlimentePar", "sujet": "BatimentConsommateur",
+                 "objet": "SourceProduction"},
     # TODO Elyess : "stocker" -> stockeEnergieDe (sujet SystemeStockage, objet SourceProduction)
     # Yassine
     # participe_sans_inversion : « les lignes reliées au poste » -> la ligne reste le sujet de
@@ -125,6 +140,9 @@ COMPARATEURS = [  # (expression, opérateur SPARQL) — les plus longues d'abord
 ]
 
 MOTS_COMPTAGE = ["combien", "nombre"]
+# agrégats sur l'attribut numérique (« consommation totale », « puissance moyenne »)
+MOTS_SOMME = ["total", "totale", "somme", "cumulé", "cumulée"]
+MOTS_MOYENNE = ["moyenne", "moyen"]
 MOTS_MAX = ["le plus", "la plus", "les plus", "maximum", "max", "plus grand", "plus grande"]
 MOTS_MIN = ["le moins", "la moins", "les moins", "minimum", "min", "plus petit", "plus petite",
             "plus faible"]

@@ -289,6 +289,7 @@
 <owl:NamedIndividual rdf:about="#Centrale_Solaire_Tozeur">
   <rdf:type rdf:resource="#CentraleSolaire"/>
   <estSitueDans rdf:resource="#Zone_Tozeur"/>
+  <alimente rdf:resource="#Residence_Tozeur"/>
   <alimente rdf:resource="#Usine_Sfax"/>
   <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">10.0</puissanceMW>
 </owl:NamedIndividual>
@@ -296,6 +297,7 @@
 <owl:NamedIndividual rdf:about="#Parc_Eolien_SidiDaoud">
   <rdf:type rdf:resource="#ParcEolien"/>
   <estSitueDans rdf:resource="#Zone_Nabeul"/>
+  <alimente rdf:resource="#Hotel_Nabeul"/>
   <alimente rdf:resource="#Centre_Commercial_Tunis"/>
   <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">54.0</puissanceMW>
 </owl:NamedIndividual>
@@ -304,6 +306,7 @@
   <rdf:type rdf:resource="#SourceFossile"/>
   <estSitueDans rdf:resource="#Zone_Tunis"/>
   <alimente rdf:resource="#Residence_ElMenzah"/>
+  <alimente rdf:resource="#Cite_Ennasr_Tunis"/>
   <puissanceMW rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">450.0</puissanceMW>
 </owl:NamedIndividual>
 
@@ -311,6 +314,7 @@
   <rdf:type rdf:resource="#Batterie"/>
   <stockeEnergieDe rdf:resource="#Centrale_Solaire_Tozeur"/>
   <estSitueDans rdf:resource="#Zone_Tozeur"/>
+  <alimente rdf:resource="#Residence_Tozeur"/>
   <alimente rdf:resource="#Usine_Sfax"/>
   <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20.0</capaciteStockageMWh>
 </owl:NamedIndividual>
@@ -319,6 +323,7 @@
   <rdf:type rdf:resource="#StockageHydrogene"/>
   <stockeEnergieDe rdf:resource="#Parc_Eolien_SidiDaoud"/>
   <estSitueDans rdf:resource="#Zone_Nabeul"/>
+  <alimente rdf:resource="#Usine_Textile_Nabeul"/>
   <alimente rdf:resource="#Centre_Commercial_Tunis"/>
   <capaciteStockageMWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">50.0</capaciteStockageMWh>
 </owl:NamedIndividual>
@@ -339,6 +344,30 @@
   <rdf:type rdf:resource="#BatimentIndustriel"/>
   <estSitueDans rdf:resource="#Zone_Sfax"/>
   <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">900000.0</consommationKWh>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Hotel_Nabeul">
+  <rdf:type rdf:resource="#BatimentCommercial"/>
+  <estSitueDans rdf:resource="#Zone_Nabeul"/>
+  <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">180000.0</consommationKWh>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Usine_Textile_Nabeul">
+  <rdf:type rdf:resource="#BatimentIndustriel"/>
+  <estSitueDans rdf:resource="#Zone_Nabeul"/>
+  <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">150000.0</consommationKWh>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Residence_Tozeur">
+  <rdf:type rdf:resource="#BatimentResidentiel"/>
+  <estSitueDans rdf:resource="#Zone_Tozeur"/>
+  <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">30000.0</consommationKWh>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Cite_Ennasr_Tunis">
+  <rdf:type rdf:resource="#BatimentResidentiel"/>
+  <estSitueDans rdf:resource="#Zone_Tunis"/>
+  <consommationKWh rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">45000.0</consommationKWh>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#Poste_Sfax">

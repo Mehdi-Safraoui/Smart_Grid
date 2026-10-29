@@ -31,6 +31,7 @@ On normalise ensuite le texte (minuscules, sans accents), pour que « Éolienne 
 | « le plus / le moins » | superlatif → `ORDER BY … LIMIT 1` |
 | verbe d'une relation (« alimente », « alimentés par ») | relation, avec le sens déduit de la voix (active ou passive) et de la position des entités par rapport au verbe |
 | un individu seul | détail → toutes ses propriétés |
+| « total », « somme », « moyenne » (hors entité) | agrégat → `SUM` / `AVG` sur l'attribut |
 | sinon | liste |
 
 ### 4. Génération de la requête SPARQL
@@ -70,6 +71,9 @@ l'analyse détaillée (tokens, entités, intention, requête) dans « Voir l'ana
 - Qu'alimente la batterie de Tozeur ?
 - Donne-moi des infos sur Radès
 - Qu'est-ce qu'il y a à Sfax ?
+- Quelle est la consommation totale des bâtiments à Tunis ?
+- Quels bâtiments dépendent de la centrale de Radès ?
+- Qu'est-ce qui alimente l'usine textile ?
 
 ## Limites (à connaître si la prof pose la question)
 - Le vocabulaire est défini à la main : un mot absent de `vocabulaire.py` n'est pas compris. C'est pour ça que chacun ajoute les synonymes de sa branche.
